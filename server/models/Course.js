@@ -9,7 +9,10 @@ const courseSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Department"
     },
-
+  createdAd: {
+    type: Date,
+    default: Date.now
+  },
     lecturer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"

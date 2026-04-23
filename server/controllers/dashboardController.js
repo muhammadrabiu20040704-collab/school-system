@@ -1,33 +1,49 @@
 import User from "../models/User.js";
-import Course from "../models/Course.js";
 
-export const getAdminDashboard = async (req, res) => {
+// GET DASHBOARD
+export const getDashboard = async (req, res) => {
   try {
+    // 📊 STATS
     const students = await User.countDocuments({ role: "student" });
     const lecturers = await User.countDocuments({ role: "lecturer" });
-    const courses = await Course.countDocuments();
+    const admins = await User.countDocuments({ role: "admin" });
 
-    const recentStudents = await User.find({ role: "student" })
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .select("name email createdAt");
+    // 📈 STUDENT MONTHLY CHART
+    const studentStats = await User.aggregate([
+      { $match: { role: "student" } },
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          total: { $sum: 1 }
+        }
+      },
+      { $sort: { "_id": 1 } }
+    ]);
 
-    const recentCourses = await Course.find()
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .select("title code createdAt");
+    // 🗓️ MONTH NAMES
+    const months = [
+      "Jan","Feb","Mar","Apr","May","Jun",
+      "Jul","Aug","Sep","Oct","Nov","Dec"
+    ];
 
+    const chartData = studentStats.map(item => ({
+      month: months[item._id - 1],
+      students: item.total
+    }));
+
+    // 📤 RESPONSE
     res.json({
       stats: {
         students,
         lecturers,
-        courses
+        admins
       },
-      recentStudents,
-      recentCourses
+      chartData
     });
 
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      message: error.message
+    });
   }
 };
