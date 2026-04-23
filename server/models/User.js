@@ -16,7 +16,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-
+  department: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Department"
+},
   role: {
     type: String,
     enum: ["admin", "lecturer", "student"],

@@ -9,6 +9,9 @@ import testRoutes from "./routes/test.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
+import departmentRoutes from "./routes/departmentRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+
 
 
 import connectDB from "./config/db.js";
@@ -29,6 +32,8 @@ app.use("/api/test", testRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/departments", departmentRoutes);
+app.use("/api/users", userRoutes);
 
 
 const PORT = process.env.PORT || 3000;

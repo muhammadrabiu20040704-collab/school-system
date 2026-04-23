@@ -7,10 +7,24 @@ export const getAdminDashboard = async (req, res) => {
     const lecturers = await User.countDocuments({ role: "lecturer" });
     const courses = await Course.countDocuments();
 
+    const recentStudents = await User.find({ role: "student" })
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("name email createdAt");
+
+    const recentCourses = await Course.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select("title code createdAt");
+
     res.json({
-      students,
-      lecturers,
-      courses
+      stats: {
+        students,
+        lecturers,
+        courses
+      },
+      recentStudents,
+      recentCourses
     });
 
   } catch (error) {

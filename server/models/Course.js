@@ -2,22 +2,19 @@ import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true
-    },
-    code: {
-      type: String,
-      required: true
+    title: String,
+    code: String,
+
+    department: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Department"
     },
 
-    // 👇 NEW
     lecturer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
 
-    // 👇 NEW
     students: [
       {
         type: mongoose.Schema.Types.ObjectId,
