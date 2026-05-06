@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-
+// PROTECT ROUTES
 export const protect = async (req, res, next) => {
   let token;
 
@@ -36,7 +36,7 @@ export const protect = async (req, res, next) => {
     return res.status(401).json({ message: "No token" });
   }
 };
-
+// AUTHORIZE ROLES
 export const authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
@@ -47,7 +47,7 @@ export const authorizeRoles = (...roles) => {
     next();
   };
 };
-
+// ADMIN ONLY
 export const adminOnly = (req, res, next) => {
   if (req.user && req.user.role === "admin") {
     next();

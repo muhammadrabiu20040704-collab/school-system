@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+// Enrollment model
 const enrollmentSchema = new mongoose.Schema(
   {
     student: {
