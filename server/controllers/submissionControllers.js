@@ -41,7 +41,7 @@ export const createSubmissions = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
+//get all submissions for the logged in student
 export const getSubmissions = async (req, res) => {
   try {
     const submissions = await Submission.find({ student: req.user.id }).populate("assignment");
