@@ -4,22 +4,37 @@ const submissionSchema = new mongoose.Schema(
   {
     assignment: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Assignment"
+      ref: "Assignment",
+      required: true
     },
 
     student: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "User",
+      required: true
     },
 
-    answer: String,
+    answer: {
+      type: String,
+      required: true
+    },
+    file: {
+      type: String,
+      default: ""
+    },
 
     score: {
       type: Number,
-      default: 0
+      default: null
+    },
+    
+    feedback: {
+      type: String
     }
   },
   { timestamps: true }
 );
+
+submissionSchema.index({ assignment: 1, student: 1 }, { unique: true });
 
 export default mongoose.model("Submission", submissionSchema);

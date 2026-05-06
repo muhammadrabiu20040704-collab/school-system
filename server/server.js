@@ -13,6 +13,7 @@ import departmentRoutes from "./routes/departmentRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import enrollmentRoutes from "./routes/enrollmentRoutes.js";
 import assignmentRoutes from "./routes/assignmentRoutes.js";
+import submissionRoutes from "./routes/submissionRoutes.js";
 
 
 import connectDB from "./config/db.js";
@@ -37,6 +38,7 @@ app.use("/api/departments", departmentRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/assignments", assignmentRoutes);
+app.use("/api/submissions", submissionRoutes);
 
 
 const PORT = process.env.PORT || 3000;

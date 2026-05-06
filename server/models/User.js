@@ -15,7 +15,11 @@ const userSchema = new mongoose.Schema(
     department: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Department"
-    }
+    },
+      courses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course"
+      }]
   },
   { timestamps: true }
 );

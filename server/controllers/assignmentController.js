@@ -1,5 +1,6 @@
 import Assignment from "../models/Assignment.js";
 
+//create new assignment
 export const createAssignment = async (req, res) => {
   try {
     const { title, description, courseId, deadline } = req.body;
@@ -27,7 +28,7 @@ export const createAssignment = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
+//get all assignments
 export const getAssignments = async (req, res) => {
   try {
      const assignments = await Assignment.find()
@@ -39,3 +40,14 @@ export const getAssignments = async (req, res) => {
   }
  
 };
+//get assignments for the logged in student
+export const getMyAssignments = async (req, res) => {
+  try {
+    const assignments = await Assignment.find({course: {$in: req.user.courses} })
+    .populate("course");
+
+    res.json(assignments);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  };
+}
