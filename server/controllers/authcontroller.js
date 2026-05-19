@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 // REGISTER USER
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // check if user exists
     const userExists = await User.findOne({ email });
@@ -69,44 +69,6 @@ export const loginUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role
-      }
-    });
-
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const loginUser = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    // check user
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: "User not found" });
-    }
-
-    // compare password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid password" });
-    }
-
-    // create token
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
-
-    res.json({
-      message: "Login successful",
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
         role: user.role
       }
     });

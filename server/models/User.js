@@ -2,24 +2,27 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    name: String,
-    email: String,
-    password: String,
+    name: {
+      type: String,
+      required: true
+    },
+
+    email: {
+      type: String,
+      required: true,
+      unique: true
+    },
+
+    password: {
+      type: String,
+      required: true
+    },
 
     role: {
       type: String,
-      enum: ["student", "lecturer", "admin"],
+      enum: ["admin", "lecturer", "student"],
       default: "student"
-    },
-
-    department: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Department"
-    },
-      courses: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course"
-      }]
+    }
   },
   { timestamps: true }
 );

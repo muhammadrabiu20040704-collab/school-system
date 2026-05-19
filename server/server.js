@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
 
-import authRoutes from "./routes/auth.js";
+import authRoutes from "./routes/authRoutes.js";
 import testRoutes from "./routes/test.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
@@ -14,7 +14,7 @@ import userRoutes from "./routes/userRoutes.js";
 import enrollmentRoutes from "./routes/enrollmentRoutes.js";
 import assignmentRoutes from "./routes/assignmentRoutes.js";
 import submissionRoutes from "./routes/submissionRoutes.js";
-
+import studentProfileRoutes from "./routes/studentProfileRoutes.js";
 
 import connectDB from "./config/db.js";
 
@@ -39,6 +39,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/assignments", assignmentRoutes);
 app.use("/api/submissions", submissionRoutes);
+app.use("/api/student-profiles", studentProfileRoutes); 
 
 
 const PORT = process.env.PORT || 3000;

@@ -3,15 +3,40 @@ import Department from "../models/Department.js";
 // CREATE
 export const createDepartment = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, code } = req.body;
 
-    const dept = new Department({ name });
+    if (!name || !code) {
+      return res.status(400).json({
+        message: "Name and code are required"
+      });
+    }
+
+    const existingDepartment = await Department.findOne({
+      $or: [{ name }, { code }]
+    });
+
+    if (existingDepartment) {
+      return res.status(400).json({
+        message: "Department already exists"
+      });
+    }
+
+    const dept = new Department({
+      name,
+      code
+    });
+
     await dept.save();
 
-    res.json({ message: "Department created", dept });
+    res.status(201).json({
+      message: "Department created",
+      dept
+    });
 
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      message: error.message
+    });
   }
 };
 

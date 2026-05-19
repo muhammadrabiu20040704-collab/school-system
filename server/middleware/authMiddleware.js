@@ -1,18 +1,19 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-
+// Authentication middleware
 export const protect = async (req, res, next) => {
   let token;
 
   if (
     req.headers.authorization &&
-    
     req.headers.authorization.startsWith("Bearer")
   ) {
-
-    console.log("Authorization header found:", req.headers.authorization);
     try {
-      token = req.headers.authorization.split(" ")[1];
+      console.log("Authorization header:", req.headers.authorization);
+
+      token = req.headers.authorization
+        .replace("Bearer", "")
+        .trim();
 
       console.log("TOKEN:", token);
 
@@ -22,21 +23,32 @@ export const protect = async (req, res, next) => {
 
       req.user = await User.findById(decoded.id).select("-password");
 
+      if (!req.user) {
+        return res.status(401).json({
+          message: "User not found"
+        });
+      }
+
       console.log("USER:", req.user);
 
       next();
 
     } catch (error) {
       console.log("ERROR:", error.message);
-      return res.status(401).json({ message: "Not authorized" });
+
+      return res.status(401).json({
+        message: "Not authorized"
+      });
     }
   }
 
   if (!token) {
-    return res.status(401).json({ message: "No token" });
+    return res.status(401).json({
+      message: "No token"
+    });
   }
 };
-
+// Role-based authorization middleware
 export const authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
@@ -44,14 +56,19 @@ export const authorizeRoles = (...roles) => {
         message: `Role (${req.user.role}) not allowed`
       });
     }
+
     next();
   };
 };
-
+// Admin only middleware
 export const adminOnly = (req, res, next) => {
+  console.log("ADMIN CHECK:", req.user);
+
   if (req.user && req.user.role === "admin") {
     next();
   } else {
-    res.status(403).json({ message: "Admin only access" });
+    res.status(403).json({
+      message: "Admin only access"
+    });
   }
 };
