@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-// Authentication middleware
+
 export const protect = async (req, res, next) => {
   let token;
 
@@ -48,7 +48,7 @@ export const protect = async (req, res, next) => {
     });
   }
 };
-// Role-based authorization middleware
+
 export const authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
@@ -60,7 +60,7 @@ export const authorizeRoles = (...roles) => {
     next();
   };
 };
-// Admin only middleware
+
 export const adminOnly = (req, res, next) => {
   console.log("ADMIN CHECK:", req.user);
 

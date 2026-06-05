@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+// Submission model
 const submissionSchema = new mongoose.Schema(
   {
     assignment: {

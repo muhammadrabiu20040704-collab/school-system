@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+// Assignment model
 const assignmentSchema = new mongoose.Schema(
   {
     title: {

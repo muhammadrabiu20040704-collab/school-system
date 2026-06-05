@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+// Department model
 const departmentSchema = new mongoose.Schema(
   {
     name: {
