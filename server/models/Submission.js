@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-// Submission model
+
 const submissionSchema = new mongoose.Schema(
   {
     assignment: {
@@ -16,8 +16,9 @@ const submissionSchema = new mongoose.Schema(
 
     answer: {
       type: String,
-      required: true
+      default: ""
     },
+
     file: {
       type: String,
       default: ""
@@ -27,14 +28,19 @@ const submissionSchema = new mongoose.Schema(
       type: Number,
       default: null
     },
-    
+
     feedback: {
-      type: String
+      type: String,
+      default: ""
     }
   },
   { timestamps: true }
 );
 
-submissionSchema.index({ assignment: 1, student: 1 }, { unique: true });
+// prevent duplicate submission
+submissionSchema.index(
+  { assignment: 1, student: 1 },
+  { unique: true }
+);
 
 export default mongoose.model("Submission", submissionSchema);

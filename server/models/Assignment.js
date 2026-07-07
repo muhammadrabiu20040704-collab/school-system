@@ -23,6 +23,24 @@ const assignmentSchema = new mongoose.Schema(
       required: true
     },
 
+    department: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Department",
+      required: true
+    },
+
+    level: {
+      type: String,
+      enum: ["ND1", "ND2", "HND1", "HND2"],
+      required: true
+    },
+
+    semester: {
+      type: String,
+      enum: ["First", "Second"],
+      required: true
+    },
+
     deadline: Date,
 
     assignedStudents: [{
