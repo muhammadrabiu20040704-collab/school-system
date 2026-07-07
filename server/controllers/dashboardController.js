@@ -1,4 +1,8 @@
 import User from "../models/User.js";
+import Assignment from "../models/Assignment.js";
+import Course from "../models/Course.js";
+import Department from "../models/Department.js"
+import StudentProfile from "../models/StudentProfile.js";
 
 // GET DASHBOARD
 export const getDashboard = async (req, res) => {
@@ -7,38 +11,56 @@ export const getDashboard = async (req, res) => {
     const students = await User.countDocuments({ role: "student" });
     const lecturers = await User.countDocuments({ role: "lecturer" });
     const admins = await User.countDocuments({ role: "admin" });
+    const departments = await Department.countDocuments();
+    const courses = await Course.countDocuments();
+    const assignments = await Assignment.countDocuments();
+          
+    //recent students
+    const recentStudents = await StudentProfile.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .populate("user", "name email")
+      .populate("department", "name");
 
-    // 📈 STUDENT MONTHLY CHART
-    const studentStats = await User.aggregate([
-      { $match: { role: "student" } },
+      //students per departments
+    const departmentStats = await StudentProfile.aggregate([
       {
         $group: {
-          _id: { $month: "$createdAt" },
-          total: { $sum: 1 }
+          _id: "$department",
+          totalStudents: { $sum: 1 }
         }
       },
-      { $sort: { "_id": 1 } }
+      {
+        $lookup: {
+          from: "departments",
+          localField: "_id",
+          foreignField: "_id",
+          as: "departmentInfo"
+        }
+      },
+      { $unwind: "$departmentInfo" },
+      {
+        $project: {
+          _id: 0,
+          department: "$departmentInfo.name",
+          totalStudents: 1
+        }
+      },
+      { $sort: { totalStudents: -1 } }
     ]);
-
-    // 🗓️ MONTH NAMES
-    const months = [
-      "Jan","Feb","Mar","Apr","May","Jun",
-      "Jul","Aug","Sep","Oct","Nov","Dec"
-    ];
-
-    const chartData = studentStats.map(item => ({
-      month: months[item._id - 1],
-      students: item.total
-    }));
 
     // 📤 RESPONSE
     res.json({
       stats: {
         students,
         lecturers,
-        admins
+        admins,
+        departments,
+        courses,
+        assignments
       },
-      chartData
+      recentStudents,
+      departmentStats
     });
 
   } catch (error) {

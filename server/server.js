@@ -15,6 +15,9 @@ import enrollmentRoutes from "./routes/enrollmentRoutes.js";
 import assignmentRoutes from "./routes/assignmentRoutes.js";
 import submissionRoutes from "./routes/submissionRoutes.js";
 import studentProfileRoutes from "./routes/studentProfileRoutes.js";
+import lecturerRoutes from "./routes/lecturerRoutes.js";
+import lecturerDashboardRoutes from "./routes/lecturerDashboardRoutes.js"
+import studentDashboardRoutes from "./routes/studentDashboardRoutes.js";
 
 import connectDB from "./config/db.js";
 
@@ -40,6 +43,9 @@ app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/assignments", assignmentRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/student-profiles", studentProfileRoutes); 
+app.use("/api/lecturers",lecturerRoutes);
+app.use("/api/lecturer-dashboard", lecturerDashboardRoutes);
+app.use("/api/student-dashboard",studentDashboardRoutes);
 
 
 const PORT = process.env.PORT || 3000;

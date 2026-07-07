@@ -34,20 +34,44 @@ export const createAssignment = async (req, res) => {
 };
 //get all assignments
  export const getAssignments = async (req, res) => {
-  try {
 
-    const assignments = await Assignment.find()
-      .populate("course", "title code")
-      .populate("lecturer", "name email")
-      .populate("department", "name code");
+try {
 
-    res.json(assignments);
 
-  } catch (error) {
-    res.status(500).json({
-      message: error.message
-    });
-  }
+const assignments = await Assignment.find({
+
+lecturer:req.user.id
+
+})
+
+
+.populate(
+"course",
+"title code"
+)
+
+.populate(
+"department",
+"name code"
+);
+
+
+res.json(assignments);
+
+
+
+}catch(error){
+
+
+res.status(500).json({
+
+message:error.message
+
+});
+
+
+}
+
 };
 
 //get assignments for the logged in student
@@ -90,11 +114,18 @@ export const updateAssignment = async (req, res) => {
     // find assignment
     const assignment = await Assignment.findById(req.params.id);
 
-    if (!assignment) {
-      return res.status(404).json({
-        message: "Assignment not found"
-      });
-    }
+   if(
+assignment.lecturer.toString()
+!== req.user.id
+){
+
+return res.status(403).json({
+
+message:"Not your assignment"
+
+});
+
+}
 
     // update fields
     assignment.title =

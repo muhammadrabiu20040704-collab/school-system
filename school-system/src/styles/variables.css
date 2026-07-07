@@ -1,9 +1,16 @@
 :root {
-  --primary-color: #1e3a8a;
+  --primary-color:  #088636;
   --secondary-color: #f1f5f9;
-  --accent-color: #2563eb;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
+  --accent-color: #16a34a;
+
+  --success-color: #070596;
+  --success-hover: #0b08be;
+
+  --danger-color: #dc2626;
+  --danger-hover: #b91c1c;
+
+  --warning-color: #f59e0b;
+  --warning-hover: #9e680c;
 
   --text-color: #111827;
   --white-color: #ffffff;

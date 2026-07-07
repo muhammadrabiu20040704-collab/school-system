@@ -1,8 +1,288 @@
-export default function StudentDashboard() {
-    return (
-        <div>
-            
-            <h1>welcome to studentdashboard</h1>
-        </div>
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+import StudentLayout from "../../layouts/StudentLayout";
+
+import "../../styles/dashboard.css";
+
+
+
+export default function StudentDashboard(){
+
+
+const [dashboard, setDashboard] = useState(null);
+const [loading, setLoading] = useState(true);
+
+const token = localStorage.getItem("token");
+
+const fetchDashboard = async () => {
+  try {
+
+    const res = await axios.get(
+      "http://localhost:3000/api/student-dashboard",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
+
+    setDashboard(res.data);
+
+  } catch (error) {
+
+    console.log(error);
+
+  } finally {
+
+    setLoading(false);
+
+  }
+};
+
+useEffect(() => {
+  fetchDashboard();
+}, []);
+if (loading) {
+  return (
+    <StudentLayout>
+      <h2>Loading...</h2>
+    </StudentLayout>
+  );
+}
+
+if (!dashboard) {
+  return (
+    <StudentLayout>
+      <h2>No Data</h2>
+    </StudentLayout>
+  );
+}
+
+return(
+
+
+
+<StudentLayout>
+
+
+
+<div className="page-content">
+
+
+
+<h1>
+
+Student Dashboard
+
+</h1>
+
+<div className="stats-grid">
+
+<div className="stat-card">
+
+<h3>Department</h3>
+
+<p>
+
+{dashboard.department?.name || "No Department"}
+
+</p>
+
+</div>
+
+<div className="stat-card">
+
+<h3>Courses</h3>
+
+<p>
+
+{dashboard.stats.totalCourses || 0 }
+
+</p>
+
+</div>
+
+<div className="stat-card">
+
+<h3>Assignments</h3>
+
+<p>
+
+{dashboard.stats.totalAssignments || 0}
+
+</p>
+
+</div>
+
+</div>
+
+<div className="table-card">
+
+<h2>Department Lecturers</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Lecturer</th>
+<th>Department</th>
+<th>Course</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{
+
+dashboard.lecturers?.length > 0 ?
+
+dashboard.lecturers.map((item,index)=>(
+
+<tr key={index}>
+
+<td>
+
+{item.lecturer?.name}
+
+</td>
+
+<td>
+
+{item.department?.name}
+
+</td>
+
+<td>
+
+{item.course?.title || "No Course"} 
+
+</td>
+
+</tr>
+
+))
+
+:
+
+<tr>
+
+<td colSpan="3">
+
+No Lecturer
+
+</td>
+
+</tr>
+
+}
+
+</tbody>
+
+</table>
+
+</div>
+
+<div className="table-card">
+
+<h2>
+
+Recent Assignments
+
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Title</th>
+
+<th>Course</th>
+
+<th>Lecturer</th>
+
+<th>Deadline</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{
+
+dashboard.recentAssignments?.length > 0 ?
+
+dashboard.recentAssignments.map((assignment)=>(
+
+<tr key={assignment._id}>
+
+<td>
+
+{assignment.title}
+
+</td>
+
+<td>
+
+{assignment.course?.title || "-"}
+
+</td>
+
+<td>
+
+{assignment.lecturer?.name || "-"}
+
+</td>
+
+<td>
+
+{
+
+assignment.deadline
+? new Date(
+assignment.deadline
+).toLocaleDateString()
+: "No Deadline"
+
+}
+
+</td>
+
+</tr>
+
+))
+
+:
+
+<tr>
+
+<td colSpan="4">
+
+No recent assignments available.
+
+</td>
+
+</tr>
+
+}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</StudentLayout>
+
+)
+
 }

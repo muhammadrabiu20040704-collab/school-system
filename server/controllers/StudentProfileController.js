@@ -1,13 +1,14 @@
 import StudentProfile from "../models/StudentProfile.js";
+import User from "../models/User.js"
 
 // create profile for student
 export const createStudentProfile = async (req, res) => {
   try {
-    const { admissionNumber, department, level, semester } = req.body;
+    const {userId, admissionNumber, department, level, semester } = req.body;
 
     //user id from auth middleware
     const existingProfile = await StudentProfile.findOne({
-      $or: [{ user: req.user._id }, { admissionNumber }]
+      $or: [{ user: userId }, { admissionNumber }]
     });
 //check exicting profile
    if (existingProfile) {
@@ -17,7 +18,7 @@ export const createStudentProfile = async (req, res) => {
     }
     //create profile
     const profile = new StudentProfile({
-        user: req.user._id,
+        user: userId,
         admissionNumber,
         department,
         level,
@@ -57,7 +58,7 @@ export const getStudentProfiles = async (req, res) => {
 //update student profile
 export const updateStudentProfile = async (req, res) => {
   try {
-    const profile = await StudentProfile.findOne(req.params.id);
+ const profile = await StudentProfile.findById(req.params.id);
     if (!profile) {
         return res.status(404).json({ message: "Profile not found" });
 
@@ -94,7 +95,7 @@ export const deleteStudentProfile = async (req, res) => {
     if (!profile) {
         return res.status(404).json({ message: "Profile not found" });
     }
-        await profile.remove();
+        await profile.deleteOne();
         res.json({ message: "Profile deleted successfully" });
 
     } catch (error) {
@@ -105,9 +106,9 @@ export const deleteStudentProfile = async (req, res) => {
 };
 
 //get single student profile
-export const getStudentProfile = async (req, res) => {
+export const getMyProfile = async (req, res) => {
   try {
-    const profile = await StudentProfile.findById(req.params.id)
+    const profile = await StudentProfile.findOne({ user: req.user._id })
     .populate("user", "name email")
     .populate("department", "name code");
 
@@ -124,18 +125,27 @@ export const getStudentProfile = async (req, res) => {
   }
 };
 
-// ✅ GET ALL STUDENTS WITH PROFILE
-export const getStudents = async (req, res) => {
-  try {
-    const students = await StudentProfile.find()
-      .populate("user", "name email role")
-      .populate("department", "name code");
+export const getAvailableStudents = async(req,res)=>{
 
-    res.json(students);
+try{
 
-  } catch (error) {
-    res.status(500).json({
-      message: error.message
-    });
-  }
+
+const students = await User.find({
+role:"student"
+}).select("name email");
+
+
+res.json(students);
+
+
+
+}catch(error){
+
+res.status(500).json({
+message:error.message
+});
+
+}
+
+
 };

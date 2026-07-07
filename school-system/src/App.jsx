@@ -13,12 +13,20 @@ import StudentDashboard from './Pages/Student/StudentDashboard';
 import LecturerDashboard from "./Pages/Lecturer/LecturerDashboard";
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
 import ProtectRoute from './components/ProtectRoute';
-import DashboardLayout from './Layouts/DashboardLayout';
+import AdminLayout from "./layouts/AdminLayout";
+import LecturerLayout from "./layouts/LecturerLayout";
+import StudentLayout from "./layouts/StudentLayout";
 import Departments from "./Pages/Admin/Departments";
 import Courses from "./Pages/Admin/Courses";
 import Students from "./Pages/Admin/Students";
 import Lecturers from "./Pages/Admin/Lecturers";
-
+import DepartmentCourses from "./Pages/Admin/DepartmentCourses";
+import LecturerDetails from './Pages/Admin/LecturerDetails';
+import AddStudent from "./Pages/Admin/AddStudentProofile";
+import Users from './Pages/Admin/Users';
+import Assignments from "./Pages/Lecturer/Assignments";
+import MyAssignments from "./pages/Student/MyAssignments"
+import MyCourses from "./pages/lecturer/MyCourses";
 
 function App() {
   return (
@@ -46,7 +54,9 @@ function App() {
           </ProtectRoute>
         } />
           <Route path="/unauthorized" element={<h1>Unauthorized</h1>} />
-          <Route path="DashboardLayout" element={<DashboardLayout />} />
+          <Route path="AdminLayout" element={<AdminLayout />} />
+          <Route path="LecturerLayout" element={<LecturerLayout />} />
+          <Route path="StudentLayout" element={<StudentLayout />} />
           <Route path="/departments" element={<ProtectRoute allowedRoles={["admin"]}>
             <Departments />
           </ProtectRoute>} />
@@ -59,6 +69,22 @@ function App() {
           <Route path="/lecturers" element={<ProtectRoute allowedRoles={["admin"]}>
             <Lecturers />
           </ProtectRoute>} />
+          <Route path="/departments/:id/courses" element={<ProtectRoute allowedRoles={["admin"]}>
+            <DepartmentCourses />
+          </ProtectRoute>} />
+          <Route path="/admin/users"element={<ProtectRoute allowedRoles={["admin"]}>
+              <Users />
+          </ProtectRoute>} />
+          <Route path="/lecturers/:id"element={<LecturerDetails/>}/>
+          <Route path="/students/add"element={<AddStudent/>} />
+          <Route path="/lecturer/assignments"element={<ProtectRoute allowedRoles={["lecturer"]}>
+            <Assignments/>
+           </ProtectRoute>} />
+           <Route path="/Student/MyAssignments"element={<ProtectRoute allowedRoles={["student"]}>
+            <MyAssignments/>
+           </ProtectRoute>} />
+           <Route path="/lecturer/my-courses" element={<MyCourses />}
+/>
       </Routes>
     </Router>
   );

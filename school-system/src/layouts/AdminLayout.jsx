@@ -1,4 +1,4 @@
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/admin/AdminSidebar";
 import Navbar from "../components/Navbar";
 
 import "../Styles/dashboard.css";

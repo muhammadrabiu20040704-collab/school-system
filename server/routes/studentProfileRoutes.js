@@ -2,10 +2,10 @@ import express from 'express';
 import { 
     createStudentProfile, 
     getStudentProfiles,
-    getStudentProfile, 
+    getMyProfile, 
     updateStudentProfile,
     deleteStudentProfile,
-    getStudents
+    getAvailableStudents
 } from '../controllers/StudentProfileController.js';
 
 import {
@@ -28,15 +28,17 @@ router.post(
 router.get(
   "/",
   protect,
+  authorizeRoles("admin"),
   getStudentProfiles
 );
 
 
 // GET ONE
 router.get(
-  "/:id",
+  "/my-profile",
   protect,
-  getStudentProfile
+  authorizeRoles("student"),
+  getMyProfile
 );
 
 
@@ -55,6 +57,13 @@ router.delete(
   protect,
   authorizeRoles("admin"),
   deleteStudentProfile
+);
+
+router.get(
+"/available-users",
+protect,
+authorizeRoles("admin"),
+getAvailableStudents
 );
 
 export default router;

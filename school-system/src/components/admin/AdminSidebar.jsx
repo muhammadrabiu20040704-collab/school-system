@@ -35,6 +35,17 @@ export default function Sidebar() {
                     Lecturers
                     </Link>
                 </li>
+
+                <li>
+
+<Link to="/admin/users">
+
+Users Management
+
+</Link>
+
+</li>
+
                    
             </ul>
 
