@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 import LecturerLayout from "../../layouts/LecturerLayout";
 
@@ -11,6 +13,8 @@ export default function MyCourses() {
   const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("token");
+  
+const navigate = useNavigate();
 
   const fetchCourses = async () => {
 
@@ -157,11 +161,16 @@ export default function MyCourses() {
 
                     <td>
 
-                      <button className="btn btn-primary">
 
-                        View
-
-                      </button>
+                       <button
+    className="btn btn-primary"
+    onClick={() =>
+        navigate(`/lecturer/courses/${course._id}/students`)
+    }
+>
+    View Students
+</button>
+                      
 
                     </td>
 

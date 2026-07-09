@@ -27,6 +27,7 @@ import Users from './Pages/Admin/Users';
 import Assignments from "./Pages/Lecturer/Assignments";
 import MyAssignments from "./pages/Student/MyAssignments"
 import MyCourses from "./pages/lecturer/MyCourses";
+import CourseStudents from "./pages/lecturer/CourseStudents";
 
 function App() {
   return (
@@ -83,8 +84,9 @@ function App() {
            <Route path="/Student/MyAssignments"element={<ProtectRoute allowedRoles={["student"]}>
             <MyAssignments/>
            </ProtectRoute>} />
-           <Route path="/lecturer/my-courses" element={<MyCourses />}
-/>
+           <Route path="/lecturer/my-courses" element={<MyCourses />} />
+           <Route path="/lecturer/courses/:courseId/students" element={<CourseStudents />} />
+           
       </Routes>
     </Router>
   );
