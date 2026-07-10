@@ -481,7 +481,37 @@ color:white;
 
 
 
+.attendance-btn{
 
+    display:inline-block;
+
+    margin-bottom:20px;
+
+    padding:10px 18px;
+
+    background:  #4217db;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    border-radius:6px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    gap: 10px;
+
+    cursor: pointer;
+
+}
+
+.attendance-btn:hover{
+
+    background:  #1b18b4;
+
+}
 
 
 

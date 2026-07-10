@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
 import LecturerLayout from "../../layouts/LecturerLayout";
@@ -15,6 +15,7 @@ export default function CourseStudents() {
     const [loading, setLoading] = useState(true);
 
     const [search, setSearch] = useState("");
+
 
     const fetchStudents = async () => {
 
@@ -76,6 +77,8 @@ const filteredStudents = students.filter((item) => {
     );
 
 });
+
+
 
 if (loading) {
 
@@ -147,7 +150,12 @@ return (
         onChange={(e)=>setSearch(e.target.value)}
 
     />
-
+    
+<Link to={`/lecturer/attendance/${courseId}`}
+    className="take attendance-btn"
+>
+    Take Attendance
+</Link>
 </div>
 
 <div className="table-card">

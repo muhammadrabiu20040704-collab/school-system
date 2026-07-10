@@ -25,9 +25,10 @@ import LecturerDetails from './Pages/Admin/LecturerDetails';
 import AddStudent from "./Pages/Admin/AddStudentProofile";
 import Users from './Pages/Admin/Users';
 import Assignments from "./Pages/Lecturer/Assignments";
-import MyAssignments from "./pages/Student/MyAssignments"
-import MyCourses from "./pages/lecturer/MyCourses";
-import CourseStudents from "./pages/lecturer/CourseStudents";
+import MyAssignments from "./Pages/Student/MyAssignments"
+import MyCourses from "./Pages/lecturer/MyCourses";
+import CourseStudents from "./Pages/lecturer/CourseStudents";
+import TakeAttendance from "./Pages/lecturer/TakeAttendance";
 
 function App() {
   return (
@@ -86,7 +87,7 @@ function App() {
            </ProtectRoute>} />
            <Route path="/lecturer/my-courses" element={<MyCourses />} />
            <Route path="/lecturer/courses/:courseId/students" element={<CourseStudents />} />
-           
+           <Route path="/lecturer/attendance/:courseId" element={<TakeAttendance />}/>
       </Routes>
     </Router>
   );
