@@ -33,7 +33,7 @@ export const getCourseStudents = async (req, res) => {
         )
         .populate(
             "user",
-            "name email role"
+            "name role"
         );
 
         const students = profiles.filter(profile => profile.user && profile.user.role === "student")
@@ -42,13 +42,13 @@ export const getCourseStudents = async (req, res) => {
 
             student: profile.user,
 
-            profile: {
-                _id: profile._id,
-                matricNumber: profile.matricNumber,
-                level: profile.level,
-                semester: profile.semester,
-                department: profile.department
-            }
+           profile: {
+    _id: profile._id,
+    admissionNumber: profile.admissionNumber,
+    level: profile.level,
+    semester: profile.semester,
+    department: profile.department
+}
 
         }));
 

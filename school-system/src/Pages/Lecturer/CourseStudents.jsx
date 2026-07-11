@@ -166,9 +166,9 @@ return (
 
             <tr>
 
-                <th>Name</th>
+                <th>AdmissionNumber</th>
 
-                <th>Email</th>
+                <th>Name</th>
 
                 <th>Level</th>
 
@@ -192,13 +192,13 @@ return (
 
                         <td>
 
-                            {item.student.name}
+                            {item.profile.admissionNumber} 
 
                         </td>
 
                         <td>
 
-                            {item.student.email}
+                            {item.student.name}
 
                         </td>
 
@@ -246,6 +246,6 @@ return (
         </div>
     </LecturerLayout>
 
-)
+);
 
 }

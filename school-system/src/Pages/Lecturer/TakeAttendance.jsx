@@ -125,9 +125,9 @@ const TakeAttendance = () => {
 
                             <tr>
 
-                                <th>Name</th>
+                                <th>Admission Number</th>
 
-                                <th>Email</th>
+                                <th>Name</th>
 
                                 <th>Level</th>
 
@@ -143,17 +143,17 @@ const TakeAttendance = () => {
 
                                 students.map((item) => (
 
-                                    <tr key={item.student._id}>
+                                    <tr key={item.profile._id}>
 
                                         <td>
 
-                                            {item.student.name}
+                                            {item.profile.admissionNumber}
 
                                         </td>
 
                                         <td>
 
-                                            {item.student.email}
+                                            {item.student.name}
 
                                         </td>
 
@@ -165,7 +165,7 @@ const TakeAttendance = () => {
 
                                         <td>
 
-                                            <select
+                                            <select className="btn btn-success"
 
                                                 value={
                                                     attendance[item.student._id] || "Present"
