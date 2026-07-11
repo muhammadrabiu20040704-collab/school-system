@@ -10,8 +10,13 @@ const TakeAttendance = () => {
     const token = localStorage.getItem("token");
 
     const [students, setStudents] = useState([]);
+
     const [attendance, setAttendance] = useState({});
     const [loading, setLoading] = useState(true);
+
+    const [date, setDate] = useState(
+    new Date().toISOString().split("T")[0]
+);
 
     // ============================
     // FETCH STUDENTS
@@ -60,6 +65,59 @@ const TakeAttendance = () => {
         }));
 
     };
+    const handleSubmit = async () => {
+
+    try {
+
+        const attendanceData = students.map((item) => ({
+
+            student: item.student._id,
+
+            status: attendance[item.student._id] || "Present"
+
+        }));
+
+        const payload = {
+
+            courseId,
+
+            date,
+
+            attendance: attendanceData
+
+        };
+
+        const res = await axios.post(
+
+            "http://localhost:3000/api/attendance",
+
+            payload,
+
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+        );
+
+        alert(res.data.message);
+
+    } catch (error) {
+
+        console.log(error);
+
+        alert(
+
+            error.response?.data?.message ||
+
+            "Failed to save attendance"
+
+        );
+
+    }
+
+};
 
     useEffect(() => {
 
@@ -116,6 +174,18 @@ const TakeAttendance = () => {
             <div className="page-content">
 
                 <h1>Take Attendance</h1>
+
+                <div className="form-group">
+
+    <label>Date</label>
+
+    <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+    />
+
+</div>
 
                 <div className="table-card">
 
@@ -233,7 +303,9 @@ const TakeAttendance = () => {
                     }}
                 >
 
-                    <button className="btn-primary">
+                    <button className="btn btn-primary"
+                    onClick={handleSubmit}
+                    >
 
                         Save Attendance
 
