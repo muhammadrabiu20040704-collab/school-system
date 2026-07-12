@@ -1,5 +1,6 @@
 import Attendance from "../models/Attendance.js";
 import Course from "../models/Course.js";
+import StudentProfile from "../models/StudentProfile.js";
 
 export const takeAttendance = async (req, res) => {
 
@@ -197,17 +198,62 @@ export const getAttendanceByDate = async (req, res) => {
             });
         }
 
-        const records = await Attendance.find({
+       // Get attendance records
+const records = await Attendance.find({
 
-            course: course._id,
+    course: course._id,
 
-            date: new Date(date)
+    date: new Date(date)
 
-        })
-            .populate("student", "name email")
-            .sort({ createdAt: 1 });
+})
+.populate("student", "name")
+.sort({ createdAt: 1 });
 
-        res.json(records);
+// Add student profile
+const attendanceWithProfile = await Promise.all(
+
+    records.map(async (record) => {
+
+        const profile = await StudentProfile
+            .findOne({
+                user: record.student._id
+            })
+            .populate("department", "name code");
+
+        return {
+
+            _id: record._id,
+
+            course: record.course,
+
+            lecturer: record.lecturer,
+
+            date: record.date,
+
+            status: record.status,
+
+            student: record.student,
+
+            profile: {
+
+                admissionNumber: profile?.admissionNumber,
+
+                level: profile?.level,
+
+                semester: profile?.semester,
+
+                department: profile?.department
+
+            }
+
+        };
+
+    })
+
+);
+
+res.json(attendanceWithProfile);
+        res.json(attendanceWithProfile);
 
     } catch (error) {
 

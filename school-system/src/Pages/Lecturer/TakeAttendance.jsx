@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import LecturerLayout from "../../layouts/LecturerLayout";
 
@@ -235,7 +235,7 @@ const TakeAttendance = () => {
 
                                         <td>
 
-                                            <select className="btn btn-success"
+                                            <select 
 
                                                 value={
                                                     attendance[item.student._id] || "Present"
@@ -295,23 +295,30 @@ const TakeAttendance = () => {
 
                 </div>
 
-                <div
-                    style={{
-                        marginTop: "20px",
-                        display: "flex",
-                        justifyContent: "flex-end"
-                    }}
-                >
+               <div
+    style={{
+        display: "flex",
+        gap: "10px",
+        justifyContent: "flex-end",
+        marginTop: "20px"
+    }}
+>
 
-                    <button className="btn btn-primary"
-                    onClick={handleSubmit}
-                    >
+    <button
+        className="btn btn-primary"
+        onClick={handleSubmit}
+    >
+        Save Attendance
+    </button>
 
-                        Save Attendance
+    <Link
+        to={`/lecturer/attendance/course/${courseId}`}
+        className="btn btn-success"
+    >
+        Attendance History
+    </Link>
 
-                    </button>
-
-                </div>
+</div>
 
             </div>
 

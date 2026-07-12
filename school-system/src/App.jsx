@@ -29,6 +29,8 @@ import MyAssignments from "./Pages/Student/MyAssignments"
 import MyCourses from "./Pages/lecturer/MyCourses";
 import CourseStudents from "./Pages/lecturer/CourseStudents";
 import TakeAttendance from "./Pages/lecturer/TakeAttendance";
+import AttendanceHistory from './Pages/Lecturer/AttendanceHistory';
+import AttendanceDetails from "./pages/lecturer/AttendanceDetails";
 
 function App() {
   return (
@@ -88,6 +90,9 @@ function App() {
            <Route path="/lecturer/my-courses" element={<MyCourses />} />
            <Route path="/lecturer/courses/:courseId/students" element={<CourseStudents />} />
            <Route path="/lecturer/attendance/:courseId" element={<TakeAttendance />}/>
+           <Route path="/lecturer/attendance/course/:courseId"element={<AttendanceHistory />} />
+          <Route path="/lecturer/attendance/details/:courseId/:date" element={<AttendanceDetails />} />
+
       </Routes>
     </Router>
   );
