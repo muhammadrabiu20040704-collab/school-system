@@ -4,7 +4,8 @@ import {
     takeAttendance,
     getAttendanceHistory,
     getAttendanceByDate,
-    updateAttendance
+    updateAttendance,
+    getAttendanceReport
 } from "../controllers/AttendanceController.js";
 
 import {
@@ -60,6 +61,19 @@ router.put(
     protect,
     lecturerOnly,
     updateAttendance
+
 );
+
+
+// ==============================
+// GET ATTENDANCE REPORT
+// ==============================
+router.get(
+    "/report/:courseId/:date",
+    protect,
+    lecturerOnly,
+    getAttendanceReport
+);
+
 
 export default router;

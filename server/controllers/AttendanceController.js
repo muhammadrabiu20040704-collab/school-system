@@ -325,3 +325,131 @@ export const updateAttendance = async (req, res) => {
     }
 
 };
+
+//==============================
+// GET ATTENDANCE REPORT
+//==============================
+export const getAttendanceReport = async (req, res) => {
+
+    try {
+
+        const { courseId, date } = req.params;
+
+        // Check ownership
+        const course = await Course.findOne({
+
+            _id: courseId,
+
+            lecturer: req.user.id
+
+        })
+        .populate("department", "name code")
+        .populate("lecturer", "name");
+
+        if (!course) {
+
+            return res.status(404).json({
+
+                message: "Course not found"
+
+            });
+
+        }
+
+        const selectedDate = new Date(date);
+
+const nextDate = new Date(selectedDate);
+
+nextDate.setDate(nextDate.getDate() + 1);
+
+const records = await Attendance.find({
+
+    course: course._id,
+
+    date: {
+
+        $gte: selectedDate,
+
+        $lt: nextDate
+
+    }
+
+})
+.populate("student", "name");
+
+       const attendance = await Promise.all(
+
+    records.map(async (record) => {
+
+        const profile = await StudentProfile.findOne({
+
+            user: record.student._id
+
+        });
+
+        return {
+
+            admissionNumber: profile?.admissionNumber,
+
+            name: record.student.name,
+
+            level: profile?.level,
+
+            semester: profile?.semester,
+
+            status: record.status
+
+        };
+
+    })
+
+);
+
+const summary = {
+
+    totalStudents: attendance.length,
+
+    present: attendance.filter(item => item.status === "Present").length,
+
+    absent: attendance.filter(item => item.status === "Absent").length,
+
+    late: attendance.filter(item => item.status === "Late").length,
+
+    excused: attendance.filter(item => item.status === "Excused").length
+
+};
+        res.json({
+
+    course: {
+
+        id: course._id,
+
+        title: course.title,
+
+        code: course.code,
+
+        department: course.department.name,
+
+        lecturer: course.lecturer.name
+
+    },
+
+    summary,
+
+    attendance
+
+});
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+
+            message: error.message
+
+        });
+
+    }
+
+};

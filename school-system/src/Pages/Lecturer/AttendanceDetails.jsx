@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import axios from "axios";
 import LecturerLayout from "../../layouts/LecturerLayout";
 
@@ -14,6 +16,8 @@ const AttendanceDetails = () => {
     const [loading, setLoading] = useState(true);
 
     const [statusMap, setStatusMap] = useState({});
+    
+    const [course, setCourse] = useState(null);
 
     const decodedDate = decodeURIComponent(date);
 
@@ -52,6 +56,36 @@ setStatusMap(initialStatus);
     } finally {
 
         setLoading(false);
+
+    }
+
+};
+
+const fetchCourse = async () => {
+
+    try {
+
+        const res = await axios.get(
+
+            `http://localhost:3000/api/courses/${courseId}`,
+
+            {
+
+                headers: {
+
+                    Authorization: `Bearer ${token}`
+
+                }
+
+            }
+
+        );
+
+        setCourse(res.data);
+
+    } catch (error) {
+
+        console.log(error);
 
     }
 
@@ -107,9 +141,66 @@ const handleUpdate = async (attendanceId) => {
 
 };
 
+const exportToExcel = () => {
+
+    const excelData = records.map((item) => ({
+
+        "Admission No": item.profile.admissionNumber,
+
+        "Student Name": item.student.name,
+
+        "Level": item.profile.level,
+
+        "Department": item.profile.department.name,
+
+        "Status": item.status
+
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        "Attendance"
+    );
+
+    const excelBuffer = XLSX.write(workbook, {
+        bookType: "xlsx",
+        type: "array"
+    });
+
+    const file = new Blob(
+        [excelBuffer],
+        {
+            type:
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8"
+        }
+    );
+
+    const attendanceDate = new Date(records[0].date);
+
+const formattedDate =
+`${attendanceDate.getDate()}-${
+attendanceDate.getMonth()+1
+}-${attendanceDate.getFullYear()}`;
+
+    saveAs(
+
+    file,
+
+    `${course.code}_Attendance_${formattedDate}.xlsx`
+
+);
+
+};
+
 useEffect(() => {
 
     fetchAttendance();
+    fetchCourse();
 
 }, []);
 
@@ -158,6 +249,19 @@ if (history.length === 0) {
                 <h1>Attendance Details</h1>
 
                 <div className="table-card">
+
+                    <div className="page-header">
+
+    <h2>Attendance Details</h2>
+
+    <button
+        className="btn btn-success"
+        onClick={exportToExcel}
+    >
+        Export Excel
+    </button>
+
+</div>
 
     <table>
 
