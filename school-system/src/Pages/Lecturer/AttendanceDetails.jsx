@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
+import { AttendanceExcel } from "../../utils/AttendanceExcel";
+import { AttendancePDF } from "../../utils/AttendancePDF";
 import axios from "axios";
 import LecturerLayout from "../../layouts/LecturerLayout";
 
@@ -16,8 +16,6 @@ const AttendanceDetails = () => {
     const [loading, setLoading] = useState(true);
 
     const [statusMap, setStatusMap] = useState({});
-    
-    const [course, setCourse] = useState(null);
 
     const decodedDate = decodeURIComponent(date);
 
@@ -49,6 +47,7 @@ res.data.forEach((item) => {
 
 setStatusMap(initialStatus);
 
+
     } catch (error) {
 
         console.log(error);
@@ -57,39 +56,12 @@ setStatusMap(initialStatus);
 
         setLoading(false);
 
-    }
-
-};
-
-const fetchCourse = async () => {
-
-    try {
-
-        const res = await axios.get(
-
-            `http://localhost:3000/api/courses/${courseId}`,
-
-            {
-
-                headers: {
-
-                    Authorization: `Bearer ${token}`
-
-                }
-
-            }
-
-        );
-
-        setCourse(res.data);
-
-    } catch (error) {
-
-        console.log(error);
 
     }
 
 };
+
+
 
 const handleStatusChange = (attendanceId, value) => {
 
@@ -141,66 +113,74 @@ const handleUpdate = async (attendanceId) => {
 
 };
 
-const exportToExcel = () => {
+const handleExportExcel = async () => {
 
-    const excelData = records.map((item) => ({
+    try {
 
-        "Admission No": item.profile.admissionNumber,
+        const res = await axios.get(
 
-        "Student Name": item.student.name,
+            `http://localhost:3000/api/attendance/report/${courseId}/${decodedDate}`,
 
-        "Level": item.profile.level,
+            {
 
-        "Department": item.profile.department.name,
+                headers: {
 
-        "Status": item.status
+                    Authorization: `Bearer ${token}`
 
-    }));
+                }
 
-    const worksheet = XLSX.utils.json_to_sheet(excelData);
+            }
 
-    const workbook = XLSX.utils.book_new();
+        );
 
-    XLSX.utils.book_append_sheet(
-        workbook,
-        worksheet,
-        "Attendance"
-    );
+        AttendanceExcel(res.data);
 
-    const excelBuffer = XLSX.write(workbook, {
-        bookType: "xlsx",
-        type: "array"
-    });
+    } catch (error) {
 
-    const file = new Blob(
-        [excelBuffer],
-        {
-            type:
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8"
-        }
-    );
+        console.log(error);
 
-    const attendanceDate = new Date(records[0].date);
+        alert("Failed to export Excel");
 
-const formattedDate =
-`${attendanceDate.getDate()}-${
-attendanceDate.getMonth()+1
-}-${attendanceDate.getFullYear()}`;
+    }
 
-    saveAs(
+};
 
-    file,
+const handleExportPDF = async () => {
 
-    `${course.code}_Attendance_${formattedDate}.xlsx`
+    try {
 
-);
+        const res = await axios.get(
+
+            `http://localhost:3000/api/attendance/report/${courseId}/${decodedDate}`,
+
+            {
+
+                headers: {
+
+                    Authorization: `Bearer ${token}`
+
+                }
+
+            }
+
+        );
+
+        AttendancePDF(res.data);
+
+    } catch (error) {
+
+        console.log(error);
+
+        alert("Failed to export PDF");
+
+    }
 
 };
 
 useEffect(() => {
 
     fetchAttendance();
-    fetchCourse();
+ 
 
 }, []);
 
@@ -222,7 +202,7 @@ if (loading) {
 
 }
 
-if (history.length === 0) {
+if (records.length === 0) {
 
     return (
 
@@ -254,14 +234,26 @@ if (history.length === 0) {
 
     <h2>Attendance Details</h2>
 
-    <button
-        className="btn btn-success"
-        onClick={exportToExcel}
-    >
-        Export Excel
-    </button>
+    <div className="header-actions">
+
+        <button
+            className="btn btn-success"
+            onClick={handleExportExcel}
+        >
+            Export Excel
+        </button>
+
+        <button
+            className="btn btn-danger"
+            onClick={handleExportPDF}
+        >
+            Download PDF
+        </button>
+
+    </div>
 
 </div>
+
 
     <table>
 

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 // User model
 const userSchema = new mongoose.Schema(
   {
@@ -13,6 +14,13 @@ const userSchema = new mongoose.Schema(
       unique: true
     },
 
+    phone: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true
+    },
+
     password: {
       type: String,
       required: true
@@ -22,7 +30,19 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["admin", "lecturer", "student"],
       default: "student"
+    },
+
+    // Forgot Password
+    resetPasswordToken: {
+      type: String,
+      default: null
+    },
+
+    resetPasswordExpires: {
+      type: Date,
+      default: null
     }
+
   },
   { timestamps: true }
 );

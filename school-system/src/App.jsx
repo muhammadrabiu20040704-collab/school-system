@@ -7,6 +7,7 @@ import {
   Navigate
 } from 'react-router-dom';
 
+
 import Login from './Pages/auth/Login';
 import Register from './Pages/auth/Register';
 import StudentDashboard from './Pages/Student/StudentDashboard';
@@ -92,7 +93,7 @@ function App() {
            <Route path="/lecturer/attendance/:courseId" element={<TakeAttendance />}/>
            <Route path="/lecturer/attendance/course/:courseId"element={<AttendanceHistory />} />
           <Route path="/lecturer/attendance/details/:courseId/:date" element={<AttendanceDetails />} />
-
+          
       </Routes>
     </Router>
   );

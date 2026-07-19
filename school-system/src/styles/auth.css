@@ -1,72 +1,829 @@
-@import "./variables.css";
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: rgba(170, 59, 255, 0.5);
-  color: var(--text-color);
-  margin: 0;
-  padding: 0;
+
+.auth-page *,
+.auth-page *::before,
+.auth-page *::after{
+    box-sizing:border-box;
 }
 
-.auth-container {
+.login-container {
+  width: 100%;
+  min-height: 100vh;
   display: flex;
+  overflow: hidden;
+}
+
+/*=============================
+left panel
+=============================== */
+.login-left{
+  width: 40%;
+  background-image: url(C:\Users\user\Desktop\school-system\school-system\public\file_0000000021488243804533e38cef7a0c.png);
+  color: #fff;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  gap: 17px;
+}
+
+/*=============================
+right panel
+=============================== */
+.login-right{
+  width: 60%;
+  background:#eef3fb;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: var(--secondary-color);
+  display: flex;
+  padding: 0px;
 }
 
-.auth-card {
+.login-right-R{
+  width: 60%;
+  background:#eef3fb;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding: 0px;
+}
+
+
+/*=============================
+login card
+=============================== */
+.login-card{
   width: 100%;
-  max-width: 400px;
-  background: var(--white-color);
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 460px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.12);
 }
 
-.auth-title {
-  text-align: center;
-  margin-bottom: 20px;
-  color: var(--primary-color);
+
+/*=============================
+left panel content
+=============================== */
+.school-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.auth-input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 1px solid var(--border-color);
-  border-radius: 9px;
-  font-size: 16px;
+/*=============================
+school logo
+=============================== */
+.school-logo {
+width: 90px;
+height: 90px;
+border-radius: 50%;
+background: #ffffff;
+padding: 10px;
+object-fit: contain;
 }
 
-.auth-input:focus {
-  outline: none;
-  border-color: var(--accent-color);
+/*=============================
+school logo h2
+=============================== */
+.school-info h2  {
+  font-size: px;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
-.auth-button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  background: var(--accent-color);
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+/*==============================
+.welcome-text
+================================ */
+.welcome-text{
+  margin: 0;
 }
 
-.auth-button:hover {
-  opacity: 0.9;
+.welcome-text h1 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.auth-link {
-  margin-top: 15px;
-  text-align: center;
+.welcome-text p{
+  font-size: 18px;
+  line-height: 1.8;
+  color: #dbeafe;
 }
 
-.auth-link a {
-  color: var(--accent-color);
-  text-decoration: none;
-  font-weight: bold;
+/* ===========================
+   FEATURES
+=========================== */
+
+.features{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.feature{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    background:rgba(255,255,255,.08);
+
+    padding:16px;
+
+    border-radius:16px;
+
+    transition:.3s;
+
+}
+
+.feature:hover{
+
+    background:rgba(255,255,255,.15);
+
+    transform:translateX(5px);
+
+}
+
+.feature-icon{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.15);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:20px;
+
+    color:#fff;
+
+    flex-shrink:0;
+
+}
+
+.feature h4{
+
+    margin-bottom:4px;
+
+    color:#fff;
+
+}
+
+.feature p{
+
+    color:#dbeafe;
+
+    font-size:14px;
+
+}
+
+.login-title{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:var(--text-color);
+
+    text-align:center;
+
+    margin-bottom:1px;
+
+}
+
+.login-subtitle{
+
+    text-align:center;
+
+    color:var(--text-light);
+
+    margin-bottom:35px;
+
+    line-height:1.6;
+
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+
+
+.footer{
+
+    margin-top:30px;
+
+    text-align:center;
+
+    
+
+}
+
+.footer a{
+
+    color:var(--primary-color);
+
+    font-weight:600;
+
+    text-decoration:none;
+
+}
+
+/*==============================
+LOGIN CARD HEADER
+===============================*/
+.input-group{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.input-icon{
+
+    position:absolute;
+
+    left:16px;
+
+    font-size:18px;
+
+    color:var(--text-light);
+
+}
+
+.login-card h1{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:#1e293b;
+
+    margin-bottom:10px;
+
+    text-align: center;
+
+}
+
+.login-card p{
+
+    color:#64748b;
+
+    font-size:16px;
+
+    margin-bottom:30px;
+
+    line-height:1.6;
+
+}
+
+/*==============================
+FORM
+===============================*/
+
+.login-card form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+/*==============================
+INPUTS
+===============================*/
+
+.auth-input{
+
+   width:100%;
+
+    height:52px;
+
+    padding-left:48px;
+
+    padding-right:48px;
+
+    border:1px solid var(--border-color);
+
+    border-radius:var(--radius-md);
+
+    background:var(--card-bg);
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:var(--transition);
+
+
+}
+.auth-input-R{
+
+    width:100%;
+
+    height:52px;
+
+    padding-left:48px;
+
+    padding-right:48px;
+
+    border:1px solid var(--border-color);
+
+    border-radius:var(--radius-md);
+
+    background:var(--card-bg);
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:var(--transition);
+
+}
+
+.auth-input-R:focus {
+ 
+
+    border-color:var(--primary-color);
+
+    box-shadow:0 0 0 4px rgba(29,78,216,.12);
+
+
+}
+
+.auth-input:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.15);
+
+}
+
+/*==============================
+OPTIONS
+===============================*/
+
+.login-options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    font-size:15px;
+
+}
+
+.login-options label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#475569;
+
+}
+
+.login-options a{
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.login-options a:hover{
+
+    text-decoration:underline;
+
+}
+
+/*==============================
+BUTTON
+===============================*/
+
+.auth-button{
+    width:100%;
+    height:50px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:#fff;
+    font-size:17px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+     margin-bottom: 10px;
+}
+
+.auth-button-R{
+    width:100%;
+    height:40px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:#fff;
+    font-size:17px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+
+}
+
+
+
+.auth-button:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+.auth-button:active{
+
+    transform:scale(.98);
+
+}
+
+.auth-button-R:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+.auth-button-R:active{
+
+    transform:scale(.98);
+
+}
+
+.auth-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:22px;
+
+
+}
+
+
+/*==============================
+REGISTER LINK
+===============================*/
+
+.auth-link{
+
+    margin-top:30px;
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:15px;
+
+}
+
+.auth-link a{
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.auth-link a:hover{
+
+    text-decoration:underline;
+
+}
+
+.school-header{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:40px;
+}
+
+.school-logo{
+    width:80px;
+    height:80px;
+    object-fit:contain;
+    border-radius:50%;
+    background:#fff;
+    padding:8px;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.school-header h2{
+    font-size:28px;
+    font-weight:700;
+    line-height:1.3;
+    color:var(--white-color);
+}
+
+/*==============================
+PASSWORD
+===============================*/
+
+.password-group{
+
+    position:relative;
+
+}
+
+.password-group .auth-input{
+
+    padding-right:90px;
+
+}
+
+.password-toggle{
+
+    position:absolute;
+
+    right:15px;
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:var(--text-light);
+
+    font-size:18px;
+
+}
+
+.auth-button:disabled{
+
+    opacity:.7;
+
+    cursor:not-allowed;
+
+}
+
+.form-options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    font-size:14px;
+
+}
+
+.form-options label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.form-options a{
+
+    color:var(--primary-color);
+
+    text-decoration:none;
+
+}
+
+/*==============================
+LOADING SPINNER
+===============================*/
+
+.spinner{
+
+    width:18px;
+
+    height:18px;
+
+    border:3px solid rgba(255,255,255,.35);
+
+    border-top:3px solid #fff;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/*=================================
+MOBILE OPTIMIZATION
+==================================*/
+@media (max-width:768px){
+
+    .features{
+
+        display:none;
+
+    }
+
+    .login-left{
+
+        min-height:220px;
+
+        justify-content:center;
+
+    }
+
+    .footer{
+
+        display:none;
+
+    }
+
+}
+
+/*=================================
+TABLET
+==================================*/
+@media (max-width:992px){
+
+.login-left{
+
+    width:45%;
+
+    padding:30px;
+
+}
+
+.login-right{
+
+    width:55%;
+
+    padding:30px;
+
+}
+
+.login-card{
+
+    padding:30px;
+
+}
+
+.welcome-text h1{
+
+    font-size:34px;
+
+}
+
+.school-info h2{
+
+    font-size:24px;
+
+}
+
+}
+
+
+
+/*=================================
+SMALL MOBILE
+==================================*/
+@media (max-width:480px){
+
+.login-left{
+
+    padding:20px 15px;
+
+}
+
+.login-right{
+
+    padding:15px;
+
+}
+
+.login-card{
+
+    padding:20px;
+
+}
+
+.login-card h1{
+
+    font-size:28px;
+
+}
+
+.login-card p{
+
+    font-size:14px;
+
+}
+
+.auth-input{
+
+    height:50px;
+
+    font-size:15px;
+
+}
+
+.auth-button{
+
+    height:50px;
+
+    font-size:16px;
+
+}
+
+.school-info h2{
+
+    font-size:20px;
+
+}
+
+.welcome-text h1{
+
+    font-size:24px;
+
+}
+
+.welcome-text p{
+
+    font-size:15px;
+
+}
+
+.feature h4{
+
+    font-size:16px;
+
+}
+
+.feature p{
+
+    font-size:14px;
+
+}
+
 }

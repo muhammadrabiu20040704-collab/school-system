@@ -336,7 +336,7 @@ Students
 
 to="/students/add"
 
-className="btn btn-primary"
+className="page-content a"
 
 >
 

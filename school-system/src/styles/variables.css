@@ -1,18 +1,95 @@
-:root {
-  --primary-color:  #088636;
-  --secondary-color: #f1f5f9;
-  --accent-color: #16a34a;
+:root{
 
-  --success-color: #0805c5;
-  --success-hover: #1815f1;
+  /* ==========================
+     BRAND COLORS
+  ========================== */
 
-  --danger-color: #dc2626;
-  --danger-hover: #b91c1c;
+  --primary-color:#1d4ed8;
+  --primary-hover:#1e40af;
 
-  --warning-color: #f59e0b;
-  --warning-hover: #9e680c;
+  --secondary-color:#f1f5f9;
 
-  --text-color: #111827;
-  --white-color: #ffffff;
-  --border-color: #d1d5db;
+  --accent-color:#16a34a;
+
+  /* ==========================
+     STATUS COLORS
+  ========================== */
+
+  --success-color:#16a34a;
+  --success-hover:#15803d;
+
+  --danger-color:#dc2626;
+  --danger-hover:#b91c1c;
+
+  --warning-color:#f59e0b;
+  --warning-hover:#d97706;
+
+  /* ==========================
+     BACKGROUNDS
+  ========================== */
+
+  --bg-color:#eef3fb;
+
+  --card-bg:#ffffff;
+
+  --sidebar-bg:#1d4ed8;
+
+  /* ==========================
+     TEXT
+  ========================== */
+
+  --text-color:#111827;
+
+  --text-light:#64748b;
+
+  --text-white:#ffffff;
+
+  /* ==========================
+     BORDER
+  ========================== */
+
+  --border-color:#d1d5db;
+
+  /* ==========================
+     BORDER RADIUS
+  ========================== */
+
+  --radius-sm:8px;
+
+  --radius-md:12px;
+
+  --radius-lg:20px;
+
+  --radius-xl:30px;
+
+  /* ==========================
+     SHADOWS
+  ========================== */
+
+  --shadow-sm:0 2px 6px rgba(0,0,0,.08);
+
+  --shadow-md:0 6px 18px rgba(0,0,0,.12);
+
+  --shadow-lg:0 10px 30px rgba(0,0,0,.16);
+
+  /* ==========================
+     TRANSITIONS
+  ========================== */
+
+  --transition:.3s ease;
+
+  /* ==========================
+     SPACING
+  ========================== */
+
+  --space-xs:8px;
+
+  --space-sm:12px;
+
+  --space-md:20px;
+
+  --space-lg:30px;
+
+  --space-xl:40px;
+
 }
