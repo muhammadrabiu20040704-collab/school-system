@@ -44,9 +44,22 @@ export default function Login() {
 
     e.preventDefault();
 
-    setLoading(true);
+    if (!formData.email.trim()) {
+    
+        return toast.error("Email is required");
+    
+    }
+
+    if (!formData.password) {
+
+    return toast.error("Password is required");
+
+}
+  
+  setLoading(true);
 
     try {
+
 
       const res = await axios.post(
         "http://localhost:3000/api/auth/login",

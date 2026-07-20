@@ -286,3 +286,73 @@ await sendEmail({
 
   }
 };
+
+
+// RESET PASSWORD
+export const resetPassword = async (req, res) => {
+    try {
+
+        //  Get token from URL
+        const { token } = req.params;
+
+        //  Get new password from body
+        const { password } = req.body;
+
+        //  Validate password
+        if (!password) {
+            return res.status(400).json({
+                message: "Password is required"
+            });
+        }
+
+        if (password.length < 6) {
+            return res.status(400).json({
+                message: "Password must be at least 6 characters"
+            });
+        }
+
+        //  Find user using reset token
+        const user = await User.findOne({
+            resetPasswordToken: token
+        });
+
+        //  Check if token exists
+        if (!user) {
+            return res.status(400).json({
+                message: "Invalid reset token"
+            });
+        }
+
+        //  Check if token has expired
+        if (Date.now() > user.resetPasswordExpires) {
+            return res.status(400).json({
+                message: "Reset token has expired. Please request a new one."
+            });
+        }
+
+        //  Hash new password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        //  Update password
+        user.password = hashedPassword;
+
+        //  Remove reset token
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        //  Save changes
+        await user.save();
+
+        //  Success response
+        return res.status(200).json({
+            message: "Password reset successful. You can now login."
+        });
+
+    } catch (error) {
+
+        return res.status(500).json({
+            message: error.message
+        });
+
+    }
+};
