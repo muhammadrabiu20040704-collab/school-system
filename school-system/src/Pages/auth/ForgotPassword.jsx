@@ -199,12 +199,12 @@ const handleSubmit = async (e) => {
 
             <>
                 <span className="spinner"></span>
-                Sending...
+                Resetting...
             </>
 
         ) : (
 
-            "Send Reset Link"
+            "Reset Password"
 
         )
     }

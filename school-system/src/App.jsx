@@ -33,6 +33,7 @@ import TakeAttendance from "./Pages/lecturer/TakeAttendance";
 import AttendanceHistory from './Pages/Lecturer/AttendanceHistory';
 import AttendanceDetails from "./pages/lecturer/AttendanceDetails";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from './Pages/auth/ResetPassword';
 
 function App() {
   return (
@@ -95,6 +96,7 @@ function App() {
            <Route path="/lecturer/attendance/course/:courseId"element={<AttendanceHistory />} />
           <Route path="/lecturer/attendance/details/:courseId/:date" element={<AttendanceDetails />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           
       </Routes>
     </Router>
