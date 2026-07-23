@@ -226,24 +226,88 @@ margin-top:20px;
 .stat-card{
 
 
-background:white;
+background: #fff;
 
 
 padding:20px;
 
 
-border-radius:8px;
+border-radius:15px;
 
 
-box-shadow:0 2px 4px rgba(0,0,0,.1);
+box-shadow:0 2px 4px rgba(0,0,0,0.8);
 
 
 text-align:center;
 
+transition: .3s ease;
+
 
 }
 
+.stat-card:hover{
 
+    transform:translateY(-5px);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+.card-icon{
+
+    width:60px;
+
+    height:60px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:rgba(37,99,235,.1);
+
+    color:var(--primary-color);
+
+    font-size:28px;
+
+}
+
+.card-title{
+
+    font-size:18px;
+
+    font-weight:600;
+
+    color:#333;
+
+    margin:0;
+
+}
+
+.card-value{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:var(--primary-color);
+
+    margin:0;
+
+}
+
+.card-subtitle{
+
+    font-size:14px;
+
+    color:#444;
+
+    margin:0;
+
+}
 
 
 

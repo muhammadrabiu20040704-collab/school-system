@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import {
+  FaBuilding,
+  FaUserGraduate,
+  FaChalkboardTeacher,
+    FaUserShield,
+    FaBookOpen,
+    FaClipboardList
+}  from "react-icons/fa";
+
+import DashboardCard from "../../components/DashboardCard";
 
 import LecturerLayout from "../../layouts/LecturerLayout";
 import "../../styles/dashboard.css";
@@ -85,41 +95,30 @@ export default function LecturerDashboard() {
 
                 <div className="stats-grid">
 
-                    <div className="stat-card">
+                   
+                         <DashboardCard
+                            icon={<FaBuilding />}
+                            title="Total Departments"
+                            value={dashboard.stats.totalDepartments}
+                            subtitle="Academic Departments"
+                        />
+                        
 
-                        <h3>Total Departments</h3>
-
-                        <p>
-
-                            {dashboard.stats.totalDepartments}
-
-                        </p>
-
-                    </div>
-
-                    <div className="stat-card">
-
-                        <h3>Total Assignments</h3>
-
-                        <p>
-
-                            {dashboard.stats.totalAssignments}
-
-                        </p>
-
-                    </div>
-
-                    <div className="stat-card">
-
-                        <h3>Total Courses</h3>
-
-                        <p>
-
-                            {dashboard.stats.totalCourses}
-
-                        </p>
-
-                    </div>
+                        
+                        <DashboardCard
+                            icon={<FaBookOpen />}
+                            title="Total Courses"
+                            value={dashboard.stats.totalCourses}
+                            subtitle="Available Courses"
+                        />
+                        
+                        <DashboardCard
+                            icon={<FaClipboardList />}
+                            title="Total Assignments"
+                            value={dashboard.stats.totalAssignments}
+                            subtitle="Course Assignments"
+                        />
+                
 
                 </div>
 

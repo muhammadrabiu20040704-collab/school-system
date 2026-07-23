@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import {
+  FaBuilding,
+  FaUserGraduate,
+  FaChalkboardTeacher,
+    FaUserShield,
+    FaBookOpen,
+    FaClipboardList
+}  from "react-icons/fa";
+
+import DashboardCard from "../../components/DashboardCard";
 
 import StudentLayout from "../../layouts/StudentLayout";
 
@@ -79,43 +89,33 @@ Student Dashboard
 
 <div className="stats-grid">
 
-<div className="stat-card">
 
-<h3>Department</h3>
 
-<p>
+ <DashboardCard
+                            icon={<FaBuilding />}
+                            title="My Departments"
+                            value={dashboard.department?.name || "No Department"}
+                            subtitle=""
+                        />
+                        
 
-{dashboard.department?.name || "No Department"}
-
-</p>
-
-</div>
-
-<div className="stat-card">
-
-<h3>Courses</h3>
-
-<p>
-
-{dashboard.stats.totalCourses || 0 }
-
-</p>
-
-</div>
-
-<div className="stat-card">
-
-<h3>Assignments</h3>
-
-<p>
-
-{dashboard.stats.totalAssignments || 0}
-
-</p>
+                        
+                        <DashboardCard
+                            icon={<FaBookOpen />}
+                            title="Total Courses"
+                            value={dashboard.stats.totalCourses || 0 }
+                            subtitle="Available Courses"
+                        />
+                        
+                        <DashboardCard
+                            icon={<FaClipboardList />}
+                            title="Total Assignments"
+                            value={dashboard.stats.totalAssignments || 0}
+                            subtitle="Course Assignments"
+                        />
 
 </div>
 
-</div>
 
 <div className="table-card">
 

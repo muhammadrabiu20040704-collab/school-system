@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import {
+  FaBuilding,
+  FaUserGraduate,
+  FaChalkboardTeacher,
+    FaUserShield,
+    FaBookOpen,
+    FaClipboardList
+}  from "react-icons/fa";
 import AdminLayout from "../../layouts/AdminLayout";
+import DashboardCard from "../../components/DashboardCard";
 import "../../styles/dashboard.css";
 
 export default function AdminDashboard() {
@@ -49,35 +58,48 @@ export default function AdminDashboard() {
 
         <div className="stats-grid">
 
-          <div className="stat-card">
-            <h3>Total Departments</h3>
-            <p>{stats?.departments}</p>
-          </div>
+          <DashboardCard
+    icon={<FaBuilding />}
+    title="Total Departments"
+    value={stats?.departments}
+    subtitle="Academic Departments"
+/>
 
-          <div className="stat-card">
-            <h3>Total Students</h3>
-            <p>{stats?.students}</p>
-          </div>
+<DashboardCard
+    icon={<FaUserGraduate />}
+    title="Total Students"
+    value={stats?.students}
+    subtitle="Registered Students"
+/>
 
-          <div className="stat-card">
-            <h3>Total Lecturers</h3>
-            <p>{stats?.lecturers}</p>
-          </div>
+<DashboardCard
+    icon={<FaChalkboardTeacher />}
+    title="Total Lecturers"
+    value={stats?.lecturers}
+    subtitle="Academic Staff"
+/>
 
-          <div className="stat-card">
-            <h3>Total Admins</h3>
-            <p>{stats?.admins}</p>
-          </div>
+         
+ <DashboardCard
+    icon={<FaUserShield />}
+    title="Total Admins"
+    value={stats?.admins}
+    subtitle="System Administrators"
+/>
 
-          <div className="stat-card">
-            <h3>Total Courses</h3>
-            <p>{stats?.courses}</p>
-          </div>
+<DashboardCard
+    icon={<FaBookOpen />}
+    title="Total Courses"
+    value={stats?.courses}
+    subtitle="Available Courses"
+/>
 
-          <div className="stat-card">
-            <h3>Total Assignments</h3>
-            <p>{stats?.assignments}</p>
-          </div>
+<DashboardCard
+    icon={<FaClipboardList />}
+    title="Total Assignments"
+    value={stats?.assignments}
+    subtitle="Course Assignments"
+/>
 
         </div>
       </div>
