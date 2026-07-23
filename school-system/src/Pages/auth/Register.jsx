@@ -321,7 +321,7 @@ setTimeout(() => {
     <input
         type={showPassword ? "text" : "password"}
         name="password"
-        placeholder="Password"
+        placeholder="Create Password"
         className="auth-input-R"
         value={formData.password}
         onChange={handleChange}
