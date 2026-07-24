@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ConfirmModal from "../components/ConfirmModal";
 
 export default function Navbar() {
 
@@ -6,6 +7,8 @@ export default function Navbar() {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [greeting, setGreeting] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
 
@@ -43,15 +46,15 @@ setTime(formattedTime);
 
 if (hour < 12) {
 
-    setGreeting("Good Morning ☀️");
+    setGreeting("Good Morning ");
 
 } else if (hour < 17) {
 
-    setGreeting("Good Afternoon 🌤️");
+    setGreeting("Good Afternoon ");
 
 } else {
 
-    setGreeting("Good Evening 🌙");
+    setGreeting("Good Evening ");
 
 }
 
@@ -100,11 +103,26 @@ setTime(formattedTime);
             <div className="navbar">
 
                 <button
-                    onClick={logout}
+                    onClick={()=> setShowModal(true)}
                     className="btn btn-warning"
                 >
                     Logout
                 </button>
+                {
+                    showModal && (
+                        <ConfirmModal
+
+                       message="Are you sure you want to log out?"
+
+                     onCancel={() => setShowModal(false)}
+
+                     onConfirm={logout}
+
+                     loading={loading}
+
+                      />
+                    )
+                }
 
             </div>
 

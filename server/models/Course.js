@@ -10,22 +10,29 @@ const courseSchema = new mongoose.Schema(
       ref: "Department"
     },
     
-  createdAd: {
-    type: Date,
-    default: Date.now
-  },
+    level: {
+  type: String,
+  enum: [
+    "ND1",
+    "ND2",
+    "HND1",
+    "HND2"
+  ],
+  required: true
+},
+
+semester: {
+      type: String,
+      enum: ["First", "Second"],
+      required: true
+    },
 
     lecturer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
-    },
+    }
 
-    students: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-      }
-    ]
+    
   },
   { timestamps: true }
 );
