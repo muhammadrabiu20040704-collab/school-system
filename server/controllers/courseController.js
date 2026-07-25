@@ -3,9 +3,14 @@ import Course from "../models/Course.js";
 // Create Course (Admin only)
 export const createCourse = async (req, res) => {
   try {
-    const { title, code, department } = req.body;
+    const { title, code, department, level, semester } = req.body;
 
-    const existingCourse = await Course.findOne({ code });
+    const existingCourse = await Course.findOne({  
+      code,
+    department,
+    level,
+    semester
+  });
 
     if (existingCourse) {
       return res.status(400).json({
@@ -13,12 +18,14 @@ export const createCourse = async (req, res) => {
       });
     }
 
-    const course = new Course({
+    const course = await Course.create({
       title,
       code,
-      department
+      department,
+      level,
+      semester
     });
-    await course.save();
+   
 
     res.json({
       message: "Course created successfully",
@@ -35,7 +42,7 @@ export const getCourses = async (req, res) => {
   const courses = await Course.find()
   .populate("department", "name code")
   .populate("lecturer", "name email")
-  .populate("students", "name email");
+  
   res.json(courses);
 };
 
@@ -105,27 +112,13 @@ message:error.message
 
 };
 
-// ENROLL STUDENT
-export const enrollStudent = async (req, res) => {
-  const { studentId } = req.body;
 
-  const course = await Course.findById(req.params.id);
-
-  if (!course) {
-    return res.status(404).json({ message: "Course not found" });
-  }
-
-  course.students.push(studentId);
-  await course.save();
-
-  res.json({ message: "Student enrolled", course });
-};
 
 //update course (admin only)
 export const updateCourse = async (req, res) => {
   try {
 
-    const { title, code, department } = req.body;
+    const { title, code, department, level, semester } = req.body;
 
     const course = await Course.findById(req.params.id);
 
@@ -138,6 +131,8 @@ export const updateCourse = async (req, res) => {
     course.title = title;
     course.code = code;
     course.department = department;
+    course.level= level;
+    course.semester = semester;
 
     await course.save();
 
@@ -166,7 +161,7 @@ export const deleteCourse = async (req, res) => {
 
   await course.deleteOne();
 
-  res.status(201).json({
+  res.status(200).json({
     message: "Course deleted"
   });
 };

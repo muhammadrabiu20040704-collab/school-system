@@ -4,14 +4,12 @@ import {
    getCourses,
   updateCourse,
   deleteCourse,
+   assignLecturer,
   removeLecturer
    } from "../controllers/courseController.js";
+   
 import { protect, adminOnly } from "../middleware/authMiddleware.js";
 
-import {
-  assignLecturer,
-  enrollStudent
-} from "../controllers/courseController.js";
 
 const router = express.Router();
 
@@ -24,8 +22,6 @@ router.get("/", protect, getCourses);
 // ASSIGN LECTURER
 router.put("/:id/assign-lecturer", protect, adminOnly, assignLecturer);
 
-// ENROLL STUDENT
-router.put("/:id/enroll", protect, adminOnly, enrollStudent);
 
 // UPDATE COURSE
 router.put(
