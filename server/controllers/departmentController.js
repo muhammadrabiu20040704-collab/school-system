@@ -127,9 +127,45 @@ export const getDepartmentCourses = async (req, res) => {
       });
     } 
     const courses = await Course.find({ department: req.params.id });
+
+    const nd1Courses = courses.filter(
+      (course) => course.level === "ND1"
+    );
+
+    const nd2Courses = courses.filter(
+      (course) => course.level === "ND2"
+    );
+
+    const hnd1Courses = courses.filter(
+      (course) => course.level === "HND1"
+    );
+
+    const hnd2Courses = courses.filter(
+      (course) => course.level === "HND2"
+    );
+
+    const levels = [
+      {
+        level: "ND1",
+        totalCourses: nd1Courses.length
+      },
+      {
+        level: "ND2",
+        totalCourses: nd2Courses.length
+      },
+      {
+        level: "HND1",
+        totalCourses: hnd1Courses.length
+      },
+      {
+        level: "HND2",
+      totalCourses: hnd2Courses.length
+      }
+    ];
+
     res.json({
       department,
-      courses
+      levels
   });
 
   } catch (error) {

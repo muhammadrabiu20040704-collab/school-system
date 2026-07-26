@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import AdminLayout from "../../layouts/AdminLayout";
 import "../../styles/dashboard.css";
+import e from "cors";
 
 export default function Courses() {
 
@@ -13,10 +14,18 @@ export default function Courses() {
   const [lecturers,setLecturers] = useState([]);
 
   const [formData, setFormData] = useState({
+
     title: "",
+
     code: "",
-    department: ""
-  });
+
+    department: "",
+
+    level: "",
+
+    semester: ""
+
+});
 
   const [editingCourse, setEditingCourse] = useState(null);
 
@@ -106,7 +115,9 @@ export default function Courses() {
       setFormData({
         title: "",
         code: "",
-        department: ""
+        department: "",
+        level: "",
+        semester: ""
       });
 
       setEditingCourse(null);
@@ -125,7 +136,9 @@ export default function Courses() {
     setFormData({
       title: course.title,
       code: course.code,
-      department: course.department?._id || ""
+      department: course.department?._id || "",
+      level: course.level || "",
+      semester: course.semester || "",
     });
   };
 
@@ -239,6 +252,7 @@ fetchLecturers();
               })
             }
           />
+         
 
           <select
             value={formData.department}
@@ -265,6 +279,59 @@ fetchLecturers();
 
           </select>
 
+           <select value={formData.level}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              level: e.target.value
+            })
+          }
+          >
+            <option value="">
+              Select Level
+            </option>
+
+            <option value="ND1">
+              ND1
+            </option>
+
+            <option value="ND2">
+              ND2
+            </option>
+
+            <option value="HND1">
+              HND1
+            </option>
+
+            <option value="HND2">
+              HND2
+            </option>
+
+          </select>
+
+         <select
+  value={formData.semester}
+  onChange={(e) =>
+    setFormData({
+      ...formData,
+      semester: e.target.value
+    })
+  }
+>
+  <option value="">
+    Select Semester
+  </option>-
+
+  <option value="First">
+    First
+  </option>
+
+  <option value="Second">
+    Second
+  </option>
+
+</select>
+
           <button
             type="submit"
             className="btn btn-primary"
@@ -287,6 +354,8 @@ fetchLecturers();
                 <th>Title</th>
                 <th>Code</th>
                 <th>Department</th>
+                <th>Level</th>
+                <th>Semester</th>
                 <th>Lecturer</th>
                 <th>Actions</th>
               </tr>
@@ -305,6 +374,8 @@ fetchLecturers();
                   <td>
                     {course.department?.name}
                   </td>
+                  <td>{course.level}</td>
+                  <td>{course.semester}</td>
                   
                   <td>
                   {course.lecturer?.name || "No Lecturer"}

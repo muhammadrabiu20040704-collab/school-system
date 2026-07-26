@@ -606,7 +606,7 @@ departments.map((dept)=>(
 to={`/departments/${dept._id}/courses`}
 
 
-className="btn btn-primary"
+className="Link btn-primary"
 
 
 >
