@@ -5,16 +5,14 @@ import "../../styles/dashboard.css";
 import e from "cors";
 
 export default function Courses() {
-
   const [courses, setCourses] = useState([]);
   const [departments, setDepartments] = useState([]);
 
-  const [assignCourse,setAssignCourse] = useState(null);
+  const [assignCourse, setAssignCourse] = useState(null);
 
-  const [lecturers,setLecturers] = useState([]);
+  const [lecturers, setLecturers] = useState([]);
 
   const [formData, setFormData] = useState({
-
     title: "",
 
     code: "",
@@ -23,31 +21,23 @@ export default function Courses() {
 
     level: "",
 
-    semester: ""
-
-});
+    semester: "",
+  });
 
   const [editingCourse, setEditingCourse] = useState(null);
-
- 
 
   // GET COURSES
   const fetchCourses = async () => {
     try {
-
       const token = localStorage.getItem("token");
 
-      const res = await axios.get(
-        "http://localhost:3000/api/courses",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      const res = await axios.get("http://localhost:3000/api/courses", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setCourses(res.data);
-
     } catch (error) {
       console.error(error);
     }
@@ -56,20 +46,15 @@ export default function Courses() {
   // GET DEPARTMENTS
   const fetchDepartments = async () => {
     try {
-
       const token = localStorage.getItem("token");
 
-      const res = await axios.get(
-        "http://localhost:3000/api/departments",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      const res = await axios.get("http://localhost:3000/api/departments", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setDepartments(res.data);
-
     } catch (error) {
       console.error(error);
     }
@@ -83,29 +68,21 @@ export default function Courses() {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     };
 
     try {
-
       if (editingCourse) {
-
         await axios.put(
           `http://localhost:3000/api/courses/${editingCourse._id}`,
           formData,
-          config
+          config,
         );
 
         alert("Course updated successfully");
-
       } else {
-
-        await axios.post(
-          "http://localhost:3000/api/courses",
-          formData,
-          config
-        );
+        await axios.post("http://localhost:3000/api/courses", formData, config);
 
         alert("Course created successfully");
       }
@@ -117,11 +94,10 @@ export default function Courses() {
         code: "",
         department: "",
         level: "",
-        semester: ""
+        semester: "",
       });
 
       setEditingCourse(null);
-
     } catch (error) {
       console.error(error);
       alert(error.response?.data?.message || "Error");
@@ -130,7 +106,6 @@ export default function Courses() {
 
   // EDIT
   const handleEdit = (course) => {
-
     setEditingCourse(course);
 
     setFormData({
@@ -144,91 +119,65 @@ export default function Courses() {
 
   // DELETE
   const handleDelete = async (id) => {
-
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this course?"
+      "Are you sure you want to delete this course?",
     );
 
     if (!confirmDelete) return;
 
     try {
-
       const token = localStorage.getItem("token");
 
-      await axios.delete(
-        `http://localhost:3000/api/courses/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      await axios.delete(`http://localhost:3000/api/courses/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       alert("Course deleted successfully");
 
       fetchCourses();
-
     } catch (error) {
       console.error(error);
       alert(error.response?.data?.message || "Error");
     }
   };
 
-const fetchLecturers = async()=>{
+  const fetchLecturers = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-try{
+      const res = await axios.get(
+        "http://localhost:3000/api/lecturers",
 
-const token = localStorage.getItem("token");
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
+      setLecturers(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-const res = await axios.get(
+  useEffect(() => {
+    fetchCourses();
 
-"http://localhost:3000/api/lecturers",
+    fetchDepartments();
 
-{
-headers:{
-Authorization:`Bearer ${token}`
-}
-}
-
-);
-
-
-setLecturers(res.data);
-
-
-}catch(error){
-
-console.log(error);
-
-}
-
-};
-
-useEffect(()=>{
-
-fetchCourses();
-
-fetchDepartments();
-
-fetchLecturers();
-
-
-},[]);
+    fetchLecturers();
+  }, []);
   return (
     <AdminLayout>
-
       <div className="dashboard-Content">
-
         <h1>Courses Management</h1>
 
         {/* FORM */}
 
-        <form
-          onSubmit={handleSubmit}
-          className="department-form"
-        >
-
+        <form onSubmit={handleSubmit} className="department-form">
           <input
             type="text"
             placeholder="Course Title"
@@ -236,7 +185,7 @@ fetchLecturers();
             onChange={(e) =>
               setFormData({
                 ...formData,
-                title: e.target.value
+                title: e.target.value,
               })
             }
           />
@@ -248,107 +197,72 @@ fetchLecturers();
             onChange={(e) =>
               setFormData({
                 ...formData,
-                code: e.target.value
+                code: e.target.value,
               })
             }
           />
-         
 
           <select
             value={formData.department}
             onChange={(e) =>
               setFormData({
                 ...formData,
-                department: e.target.value
+                department: e.target.value,
               })
             }
           >
-
-            <option value="">
-              Select Department
-            </option>
+            <option value="">Select Department</option>
 
             {departments.map((dept) => (
-              <option
-                key={dept._id}
-                value={dept._id}
-              >
+              <option key={dept._id} value={dept._id}>
                 {dept.name}
               </option>
             ))}
-
           </select>
 
-           <select value={formData.level}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              level: e.target.value
-            })
-          }
+          <select
+            value={formData.level}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                level: e.target.value,
+              })
+            }
           >
-            <option value="">
-              Select Level
-            </option>
+            <option value="">Select Level</option>
 
-            <option value="ND1">
-              ND1
-            </option>
+            <option value="ND1">ND1</option>
 
-            <option value="ND2">
-              ND2
-            </option>
+            <option value="ND2">ND2</option>
 
-            <option value="HND1">
-              HND1
-            </option>
+            <option value="HND1">HND1</option>
 
-            <option value="HND2">
-              HND2
-            </option>
-
+            <option value="HND2">HND2</option>
           </select>
 
-         <select
-  value={formData.semester}
-  onChange={(e) =>
-    setFormData({
-      ...formData,
-      semester: e.target.value
-    })
-  }
->
-  <option value="">
-    Select Semester
-  </option>-
-
-  <option value="First">
-    First
-  </option>
-
-  <option value="Second">
-    Second
-  </option>
-
-</select>
-
-          <button
-            type="submit"
-            className="btn btn-primary"
+          <select
+            value={formData.semester}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                semester: e.target.value,
+              })
+            }
           >
-            {editingCourse
-              ? "Update Course"
-              : "Add Course"}
+            <option value="">Select Semester</option>-
+            <option value="First">First</option>
+            <option value="Second">Second</option>
+          </select>
+
+          <button type="submit" className="btn btn-primary">
+            {editingCourse ? "Update Course" : "Add Course"}
           </button>
-
         </form>
 
         {/* TABLE */}
 
         <div className="table-card">
-
           <table>
-
             <thead>
               <tr>
                 <th>Title</th>
@@ -362,33 +276,23 @@ fetchLecturers();
             </thead>
 
             <tbody>
-
               {courses.map((course) => (
-
                 <tr key={course._id}>
-
                   <td>{course.title}</td>
 
                   <td>{course.code}</td>
 
-                  <td>
-                    {course.department?.name}
-                  </td>
+                  <td>{course.department?.name}</td>
                   <td>{course.level}</td>
                   <td>{course.semester}</td>
-                  
-                  <td>
-                  {course.lecturer?.name || "No Lecturer"}
-                  </td>
+
+                  <td>{course.lecturer?.name || "No Lecturer"}</td>
 
                   <td>
-
                     <button
                       type="button"
                       className="btn btn-success"
-                      onClick={() =>
-                        handleEdit(course)
-                      }
+                      onClick={() => handleEdit(course)}
                     >
                       Edit
                     </button>
@@ -396,196 +300,98 @@ fetchLecturers();
                     <button
                       type="button"
                       className="btn btn-danger"
-                      onClick={() =>
-                        handleDelete(course._id)
-                      }
+                      onClick={() => handleDelete(course._id)}
                     >
                       Delete
                     </button>
- 
-                     <button className="btn btn-success"
-                      onClick={()=>setAssignCourse(course)}
-                      >
-                     Assign Lecturer  
-                     </button>
 
+                    <button
+                      className="btn btn-success"
+                      onClick={() => setAssignCourse(course)}
+                    >
+                      Assign Lecturer
+                    </button>
                   </td>
-
                 </tr>
-
               ))}
-
             </tbody>
-
           </table>
-
         </div>
-           
-            {
-assignCourse && (
 
-<div className="modal-overlay">
-
-<div className="modal">
-
-
-<h2>
-Assign Lecturer
-</h2>
-
-
-
-<select
-
-value={assignCourse.lecturer || ""}
-
-onChange={(e)=>
-
-setAssignCourse({
-
-...assignCourse,
-
-lecturer:e.target.value
-
-})
-
-}
-
->
-
-
-<option value="">
-Select Lecturer
-</option>
-
-
-
-{
-
-lecturers.map((lecturer)=>(
-
-
-<option
-
-key={lecturer._id}
-
-value={lecturer._id}
-
->
-
-{lecturer.name}
-
-</option>
-
-
-))
-
-}
-
-
-
-</select>
-
-<button
-
-className="btn btn-success"
-
-onClick={async()=>{
-
-
-if(!assignCourse.lecturer){
-
-alert("Select lecturer first");
-
-return;
-
-}
-
-
-
-try{
-
-
-const token =
-localStorage.getItem("token");
-
-await axios.put(
-
-`http://localhost:3000/api/courses/${assignCourse._id}/assign-lecturer`,
-
-{
-
-lecturerId:
-assignCourse.lecturer
-
-},
-
-{
-
-headers:{
-
-Authorization:
-`Bearer ${token}`
-
-}
-
-}
-
-);
-
-alert(
-"Lecturer Assigned"
-);
-
-
-
-setAssignCourse(null);
-
-
-fetchCourses();
-
-
-
-}catch(error){
-
-console.log(error.response?.data || error);
-
-alert("Assign failed");
-
-}
-
-
-
-}}
-
->
-
-Save
-
-</button>
-<button
-
-className="btn btn-danger"
-
-onClick={()=>setAssignCourse(null)}
-
->
-
-Cancel
-
-</button>
-
-
-
-</div>
-
-</div>
-
-)
-}
-
+        {assignCourse && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h2>Assign Lecturer</h2>
+
+              <select
+                value={assignCourse.lecturer || ""}
+                onChange={(e) =>
+                  setAssignCourse({
+                    ...assignCourse,
+
+                    lecturer: e.target.value,
+                  })
+                }
+              >
+                <option value="">Select Lecturer</option>
+
+                {lecturers.map((lecturer) => (
+                  <option key={lecturer._id} value={lecturer._id}>
+                    {lecturer.name}
+                  </option>
+                ))}
+              </select>
+
+              <button
+                className="btn btn-success"
+                onClick={async () => {
+                  if (!assignCourse.lecturer) {
+                    alert("Select lecturer first");
+
+                    return;
+                  }
+
+                  try {
+                    const token = localStorage.getItem("token");
+
+                    await axios.put(
+                      `http://localhost:3000/api/courses/${assignCourse._id}/assign-lecturer`,
+
+                      {
+                        lecturerId: assignCourse.lecturer,
+                      },
+
+                      {
+                        headers: {
+                          Authorization: `Bearer ${token}`,
+                        },
+                      },
+                    );
+
+                    alert("Lecturer Assigned");
+
+                    setAssignCourse(null);
+
+                    fetchCourses();
+                  } catch (error) {
+                    console.log(error.response?.data || error);
+
+                    alert("Assign failed");
+                  }
+                }}
+              >
+                Save
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => setAssignCourse(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-
     </AdminLayout>
   );
 }

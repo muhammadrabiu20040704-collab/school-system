@@ -2,19 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import AdminLayout from "../../layouts/AdminLayout";
-
+import "../../styles/dashboard.css";
 export default function DepartmentCourses() {
 
   const { id } = useParams();
 
   const [department, setDepartment] = useState(null);
-  const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    fetchCourses();
-  }, []);
-
-  const fetchCourses = async () => {
+  const [levels, setLevels] = useState([]);
+ 
+   
+    const fetchDepartmentLevels = async () => {
 
     try {
 
@@ -31,12 +28,17 @@ export default function DepartmentCourses() {
       );
 
       setDepartment(res.data.department);
-      setCourses(res.data.courses);
+      setLevels(res.data.levels);
 
     } catch (error) {
       console.error(error);
     }
   };
+
+useEffect(() => {
+   fetchDepartmentLevels();
+}, [id]);
+
 
   return (
     <AdminLayout>
@@ -48,40 +50,51 @@ export default function DepartmentCourses() {
         </h1>
 
         <h3>
-          Total Courses: {courses.length}
+          Total Levels: {levels.length}
         </h3>
+        <div className="levels-grid">
 
-        <div className="table-card">
+{
 
-          <table>
+levels.map((item)=>(
 
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Title</th>
-                
-              </tr>
-            </thead>
+<div
 
-            <tbody>
+key={item.level}
 
-              {courses.map((course) => (
-                <tr key={course._id}>
+className="level-card"
 
-                  <td>{course.code}</td>
+>
 
-                  <td>{course.title}</td>
+<h2>
 
-                  
+{item.level}
 
-                </tr>
-              ))}
+</h2>
 
-            </tbody>
+<p>
 
-          </table>
+{item.totalCourses} Courses
 
-        </div>
+</p>
+
+<button
+className="btn btn-primary"
+>
+
+View Courses
+
+</button>
+
+</div>
+
+))
+
+}
+
+</div>
+
+        
 
       </div>
 

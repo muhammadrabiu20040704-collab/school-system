@@ -42,13 +42,7 @@ lecturer: lecturer._id
 .populate(
 "department",
 "name code"
-)
-
-.populate(
-"students",
-"name email"
 );
-
 
 return {
 
@@ -73,7 +67,7 @@ courses
 res.json(data);
 
 } catch (error) {
-
+console.error("Get lecturer error:". error);
 res.status(500).json({
 
 message: error.message
