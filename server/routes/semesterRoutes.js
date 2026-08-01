@@ -8,41 +8,41 @@ import {
     archiveSemester
 } from "../controllers/semesterController.js";
 
-import { verifyToken, adminOnly } from "../middleware/authMiddleware.js";
+import { protect, adminOnly } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.post(
     "/",
-    verifyToken,
+    protect,
     adminOnly,
     createSemester
 );
 
 router.get(
     "/",
-    verifyToken,
+    protect,
     adminOnly,
     getSemesters
 );
 
 router.put(
     "/:id",
-    verifyToken,
+    protect,
     adminOnly,
     updateSemester
 );
 
 router.put(
     "/:id/activate",
-    verifyToken,
+    protect,
     adminOnly,
     activateSemester
 );
 
 router.put(
     "/:id/archive",
-    verifyToken,
+    protect,
     adminOnly,
     archiveSemester
 );

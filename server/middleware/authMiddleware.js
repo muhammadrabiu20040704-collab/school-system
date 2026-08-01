@@ -75,7 +75,7 @@ export const adminOnly = (req, res, next) => {
 
 export const lecturerOnly = (req, res, next) => {
 
-    if (req.user.role !== "lecturer") {
+    if (req.user && req.user.role !== "lecturer") {
         return res.status(403).json({
             message: "Lecturer only"
         });
