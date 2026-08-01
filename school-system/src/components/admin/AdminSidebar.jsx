@@ -1,23 +1,43 @@
 import { Link} from "react-router-dom";
 import {
-    FaTachometerAlt,
-    FaBuilding,
-    FaBook,
-    FaUserGraduate,
-    FaChalkboardTeacher,
-    FaUsers
-} from "react-icons/fa"
+  FaTachometerAlt,
+  FaBuilding,
+  FaBook,
+  FaUserGraduate,
+  FaChalkboardTeacher,
+  FaUsers,
+  FaCalendarAlt,
+  FaBullhorn,
+  FaTasks,
+  FaCog
+} from "react-icons/fa";
+
+import { MdOutlineDateRange } from "react-icons/md";
+
 
 export default function Sidebar() {
     return (
         <div className="sidebar">
-            <h2>School System</h2>
+            <h2>ZACAS</h2>
 
             <ul>
                 <li>
                     <Link to="/admin-dashboard">
                     <FaTachometerAlt />
                         dashboard
+                    </Link>
+                </li>
+                
+                <li>
+                    <Link to="/academic-sessions">
+                    <FaCalendarAlt />
+                         Academic
+                    </Link>
+                </li>
+                <li>
+                     <Link to="/semesters">
+                    <MdOutlineDateRange />
+                         Semesters
                     </Link>
                 </li>
 
@@ -48,6 +68,19 @@ export default function Sidebar() {
                     Lecturers
                     </Link>
                 </li>
+                <li>
+  <Link to="/announcements">
+    <FaBullhorn />
+    Announce
+  </Link>
+</li>
+
+<li>
+  <Link to="/assignments">
+    <FaTasks />
+    Assignments
+  </Link>
+</li>
 
                 <li>
 
@@ -57,6 +90,12 @@ Users
 
 </Link>
 
+</li>
+<li>
+  <Link to="/settings">
+    <FaCog />
+    Settings
+  </Link>
 </li>
 
                    

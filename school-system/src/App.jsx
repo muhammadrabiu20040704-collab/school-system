@@ -35,6 +35,7 @@ import AttendanceDetails from "./pages/lecturer/AttendanceDetails";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from './Pages/auth/ResetPassword';
 import DashboardCard from "./components/DashboardCard"
+import AcademicSessions from "./Pages/Admin/AcademicSessions"
 
 
 function App() {
@@ -100,7 +101,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path='DashboardCard' element={<DashboardCard />}  />
-          
+          <Route path="/academic-sessions" element={<AcademicSessions />} />
       </Routes>
     </Router>
   );

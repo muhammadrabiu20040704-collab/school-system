@@ -20,6 +20,7 @@ import lecturerDashboardRoutes from "./routes/lecturerDashboardRoutes.js"
 import studentDashboardRoutes from "./routes/studentDashboardRoutes.js";
 import lecturerStudentRoutes from "./routes/lecturerStudentRoutes.js";
 import AttendanceRoutes from "./routes/AttendanceRoutes.js";
+import academicRoutes from "./routes/academicRoutes.js";
 
 import connectDB from "./config/db.js";
 
@@ -63,6 +64,7 @@ app.use("/api/lecturer-dashboard", lecturerDashboardRoutes);
 app.use("/api/student-dashboard",studentDashboardRoutes);
 app.use("/api/lecturer-students", lecturerStudentRoutes);
 app.use("/api/attendance", AttendanceRoutes);
+app.use("/api/academic-sessions", academicRoutes);
 
 const PORT = process.env.PORT || 3000;
 
