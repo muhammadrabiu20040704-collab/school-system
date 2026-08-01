@@ -18,7 +18,7 @@ import { MdOutlineDateRange } from "react-icons/md";
 export default function Sidebar() {
     return (
         <div className="sidebar">
-            <h2>ZACAS</h2>
+            <h2>Z-SYSTEM</h2>
 
             <ul>
                 <li>
@@ -71,7 +71,7 @@ export default function Sidebar() {
                 <li>
   <Link to="/announcements">
     <FaBullhorn />
-    Announce
+    Announced
   </Link>
 </li>
 
