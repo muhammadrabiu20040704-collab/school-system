@@ -1,4 +1,4 @@
-import Semester from "../models/Semester";
+import Semester from "../models/Semester.js";
 import AcademicSession from "../models/AcademicSession.js";
 
 // Create Semester (Admin only)
