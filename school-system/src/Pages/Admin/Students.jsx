@@ -330,7 +330,7 @@ Students
 </h1>
 
 
-
+</div>
 
 <Link
 
@@ -999,12 +999,6 @@ Close
 
 
 }
-
-
-
-
-
-</div>
 
 
 </AdminLayout>
